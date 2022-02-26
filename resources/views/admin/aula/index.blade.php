@@ -1,40 +1,80 @@
 @extends('layouts.appAdmin')
 
 @section('title','Aulas')
-
+@section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.4/datatables.min.css"/>
+@endsection
 @section('content')
-    <h1 class="text-5xl text-center pt-24">Aulas</h1>
-    <a href="aulas/create" class="btn btn-primary">Nuevo</a>
 
-    <table class="table table-striped mt-4">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Código</th>
-                <th scope="col">Grado y Nivel</th>
-                <th scope="col">Abreviatura</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($aulas as $aula)
+    <h1 class="titulo">Aulas</h1>
+    <a href="aulas/create" class="btn btn-success mb-4">Nuevo</a>
+    <div class="table-responsive">
+        <table id="table_id" class = "table table-hover">
+            <thead>
                 <tr>
-                    <td>{{$aula->id}}</td>
-                    <td>{{$aula->codigo}}</td>
-                    <td>{{$aula->grado}} de {{$aula->nivel}}</td>
-                    <td>{{$aula->abreviatura}}</td>
-                    <td>                     
-                        <form action="{{route('aulas.destroy',$aula->id)}}" method="POST">
-                            <a class="btn btn-success" href="/aulas/{{$aula->id}}/edit">Entrar</a>
-                            <a class="btn btn-warning" href="/aulas/{{$aula->id}}/edit">Editar</a>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
-                    </td>
-    
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    <th scope="col">ID</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Grado y Nivel</th>		
+                    <th scope="col">Acciones</th>
+                </tr>          
+            </thead>
+            
+            <tbody>
+                @foreach ($aulas as $aula)
+                    <tr>
+                        <td>{{$aula->id}}</td>
+                        <td>{{$aula->codigo}}</td>
+                        <td>{{$aula->grado}} de {{$aula->nivel}}</td>								
+                        <td>                           
+                            <form action="{{route('aulas.destroy',$aula->id)}}" method="POST" class="botones"> 
+                                <a href="/alumnos/{{$aula->id}}" class="btn btn-success">Entrar</a>
+                                <a href="/aulas/{{$aula->id}}/edit" class="btn btn-warning">Editar</a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>           
+                @endforeach     
+            </tbody>         
+        </table>
+    </div>
+    <script>
+        (function () {
+        'use strict'
+        //debemos crear la clase formEliminar dentro del form del boton borrar
+        //recordar que cada registro a eliminar esta contenido en un form  
+        var forms = document.querySelectorAll('.formEliminar')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+            form.addEventListener('submit', function (event) {        
+                event.preventDefault()
+                event.stopPropagation()        
+                Swal.fire({
+                        title: '¿Confirma la eliminación del registro?',        
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#0bb58c',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Confirmar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit();
+                            Swal.fire('¡Eliminado!', 'El registro ha sido eliminado exitosamente.','success');
+                        }
+                    })                      
+            }, false)
+            })
+        })()
+    </script>
+@endsection
+
+@section('js')
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-html5-2.2.2/b-print-2.2.2/datatables.min.js"></script>
+    <script src="{{asset('js/datatable.js')}}"></script>
 @endsection

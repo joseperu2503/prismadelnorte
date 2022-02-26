@@ -24,7 +24,7 @@ class AulaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
         return view('admin.aula.create');
     }
 
@@ -36,16 +36,16 @@ class AulaController extends Controller
      */
     public function store(Request $request)
     {
-        $aulas = new Aula();
+        $request->validate([
+            'codigo' => 'required',
+            'grado' => 'required',
+            'nivel' => 'required',
+            'abreviatura' => 'required',
+        ]);
 
-        $aulas->codigo = $request->get('codigo');
-        $aulas->grado = $request->get('grado');
-        $aulas->nivel = $request->get('nivel');
-        $aulas->abreviatura = $request->get('abreviatura');
-
-        $aulas->save();
-
-        return redirect('/aulas');
+        $aula = $request->all();       
+        Aula::create($aula);
+        return redirect()->route('aulas.index');
     }
 
     /**
@@ -78,18 +78,18 @@ class AulaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Aula $aula)
     {
-        $aula = Aula::find($id);
+        $request->validate([
+            'codigo' => 'required',
+            'grado' => 'required',
+            'nivel' => 'required',
+            'abreviatura' => 'required',
+        ]);
 
-        $aula->codigo = $request->get('codigo');
-        $aula->grado = $request->get('grado');
-        $aula->nivel = $request->get('nivel');
-        $aula->abreviatura = $request->get('abreviatura');
-
-        $aula->save();
-
-        return redirect('/aulas');
+        $aula_datos = $request->all();
+        $aula->update($aula_datos);
+        return redirect()->route('aulas.index');
     }
 
     /**
@@ -98,11 +98,15 @@ class AulaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Aula $aula)
+    {
+        $aula->delete();
+        return redirect()->route('aulas.index');
+    }
+
+    public function alumnos($id)
     {
         $aula = Aula::find($id);
-        $aula->delete();
-
-        return redirect('/aulas');
+        return view('admin.alumno.index')->with('aula',$aula);
     }
 }

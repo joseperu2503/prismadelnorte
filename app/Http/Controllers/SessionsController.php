@@ -12,13 +12,19 @@ class SessionsController extends Controller
     }
 
     public function store(){
-        if(auth()->attempt(request(['email', 'password'])) == false){
+        if(auth()->attempt(request(['dni', 'password'])) == false){
             return back()->withErrors(
-                ['message' =>'The email or password is incorrect']
+                ['message' =>'El DNI o la contraseña es incorrecta.']
             );
         }else{
             if(auth()->user()->role == 'admin'){
                 return redirect()->route('admin.index');
+            }
+            else if(auth()->user()->role == 'alumno') {
+                return redirect()->route('alumno.usuario.index');
+            }
+            else if(auth()->user()->role == 'profesor'){
+                return redirect()->route('profesor.usuario.index');
             }
             else {
                 return redirect()->to('/');

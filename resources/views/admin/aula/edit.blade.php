@@ -3,28 +3,32 @@
 @section('title','Editar aula')
 
 @section('content')
-    <h2>Editar Aula</h2>
-    <form action="/aulas/{{$aula->id}}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="mb-3">
-            <label for="" class="form-label">Código</label>
-            <input id="codigo" name="codigo" type="text" class="form-control" value="{{$aula->codigo}}" >
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Grado</label>
-            <input id="grado" name="grado" type="text" class="form-control" value="{{$aula->grado}}">
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Nivel</label>
-            <input id="nivel" name="nivel" type="text" class="form-control" value="{{$aula->nivel}}">
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Abreviatura</label>
-            <input id="abreviatura" name="abreviatura" type="text" class="form-control"value="{{$aula->abreviatura}}">
-        </div>
-        <a href="/aulas" class="btn btn-warning" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-success" tabindex="4">Actualizar</button>
-
-    </form>
+    <h1 class="titulo">Editar Aula</h1>
+    <div class="form-container">  
+        <form action="/aulas/{{$aula->id}}" method="POST">
+            @csrf
+            @method('PUT')
+            <label class="form-label">Código</label>
+            <input id="codigo" name="codigo" type="text" class="input-formulario" value="{{$aula->codigo}}">
+            <label class="form-label">Grado</label>
+            <input id="grado" name="grado" type="text" class="input-formulario" value="{{$aula->grado}}">
+            <label class="form-label">Nivel</label>
+            <input id="nivel" name="nivel" type="text" class="input-formulario" value="{{$aula->nivel}}">
+            <label class="form-label">Abreviatura</label>
+            <input id="abreviatura" name="abreviatura" type="text" class="input-formulario" value="{{$aula->abreviatura}}">           
+            @if($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    @foreach ($errors->all() as $error)
+                        - {{ $error }} <br />
+                    @endforeach
+                </div>
+            @endif
+            <div class="buttons-form">
+                <a href="/aulas" tabindex="5">
+                    <button type="button" class="boton btn-rojo" >Cancelar</button>
+                </a>
+                <button type="submit" class="boton btn-verde" tabindex="1">Actualizar</button>
+            </div>          
+        </form>
+    </div>
 @endsection
