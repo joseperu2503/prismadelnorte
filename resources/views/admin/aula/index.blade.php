@@ -26,9 +26,9 @@
                     <tr>
                         <td>{{$aula->id}}</td>
                         <td>{{$aula->codigo}}</td>
-                        <td>{{$aula->grado}} de {{$aula->nivel}}</td>								
+                        <td>{{ucwords($aula->grado)}} de {{ucwords($aula->nivel)}}</td>								
                         <td>                           
-                            <form action="{{route('aulas.destroy',$aula->id)}}" method="POST" class="botones"> 
+                            <form action="{{route('aulas.destroy',$aula->id)}}" method="POST" class="botones formEliminar"> 
                                 <a href="/alumnos/{{$aula->id}}" class="btn btn-success">Entrar</a>
                                 <a href="/aulas/{{$aula->id}}/edit" class="btn btn-warning">Editar</a>
                                 @csrf
@@ -41,34 +41,6 @@
             </tbody>         
         </table>
     </div>
-    <script>
-        (function () {
-        'use strict'
-        //debemos crear la clase formEliminar dentro del form del boton borrar
-        //recordar que cada registro a eliminar esta contenido en un form  
-        var forms = document.querySelectorAll('.formEliminar')
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-            form.addEventListener('submit', function (event) {        
-                event.preventDefault()
-                event.stopPropagation()        
-                Swal.fire({
-                        title: '¿Confirma la eliminación del registro?',        
-                        icon: 'info',
-                        showCancelButton: true,
-                        confirmButtonColor: '#0bb58c',
-                        cancelButtonColor: '#6c757d',
-                        confirmButtonText: 'Confirmar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            this.submit();
-                            Swal.fire('¡Eliminado!', 'El registro ha sido eliminado exitosamente.','success');
-                        }
-                    })                      
-            }, false)
-            })
-        })()
-    </script>
 @endsection
 
 @section('js')
@@ -77,4 +49,5 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-html5-2.2.2/b-print-2.2.2/datatables.min.js"></script>
     <script src="{{asset('js/datatable.js')}}"></script>
+    <script src="{{asset('js/sweetAlert.js')}}"></script>
 @endsection

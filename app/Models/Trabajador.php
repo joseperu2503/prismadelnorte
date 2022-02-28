@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Profesor extends Model
+class Trabajador extends Model
 {
     use HasFactory;
-    protected $table = 'profesors';
+    protected $table = 'trabajadors';
     protected $fillable = [
         'dni',
         'primer_nombre',
@@ -16,13 +16,7 @@ class Profesor extends Model
         'apellido_paterno',
         'apellido_materno',
         'telefono',
-        'email',
         'direccion',
-        'genero',   
-        'password'    
+        'puesto'
     ];
-
-    public function setPasswordAttribute($password){
-        $this->attributes['password'] = bcrypt($password);
-    }
 }

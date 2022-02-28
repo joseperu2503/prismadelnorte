@@ -1,6 +1,6 @@
 @extends('layouts.appAdmin')
 
-@section('title','Cursos')
+@section('title','Personal Complementario')
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
@@ -9,33 +9,36 @@
 
 @section('content')
 
-    <h1 class="titulo">Cursos</h1>
-    <a href="cursos/create" class="btn btn-success mb-4">Nuevo</a>
+    <h1 class="titulo">Personal Complementario</h1>
+    <a href="trabajadores/create" class="btn btn-success mb-4">Nuevo</a>
 
     <div class="table-responsive">
         <table id="table_id" class = "table table-hover">
             <thead>
                 <tr>
-                    <th >ID</th>
-                    <th scope="col">Código</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Profesor</th>		
-                    <th scope="col">Aula</th>				
+                    <th scope="col">ID</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido Materno</th>		
+                    <th scope="col">Primer Nombre</th>	
+                    <th scope="col">Segundo Nombre</th>
+                    <th scope="col">Puesto</th>					
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($cursos as $curso)
+                @foreach ($trabajadores as $trabajador)
                 <tr>
-                    <td class="align-middle">{{$curso->id}}</td>
-                    <td class="align-middle">{{$curso->codigo}}</td>
-                    <td class="align-middle">{{mb_convert_case($curso->nombre, MB_CASE_TITLE, "UTF-8")}}</td>	
-                    <td class="align-middle">{{ucwords($curso->primer_nombre." ".$curso->apellido_paterno)}}</td>	
-                    <td class="align-middle">{{ucwords($curso->grado)}} de {{ucwords($curso->nivel)}}</td>								
+                    <td class="align-middle">{{$trabajador->id}}</td>
+                    <td class="align-middle">{{$trabajador->dni}}</td>
+                    <td class="align-middle">{{ucwords($trabajador->apellido_paterno)}}</td>	
+                    <td class="align-middle">{{ucwords($trabajador->apellido_materno)}}</td>	
+                    <td class="align-middle">{{ucwords($trabajador->primer_nombre)}}</td>
+                    <td class="align-middle">{{ucwords($trabajador->segundo_nombre)}}</td>	
+                    <td class="align-middle">{{ucwords($trabajador->puesto)}}</td>							
                     <td class="align-middle">     
-                        <form action="{{route('cursos.destroy',$curso->id)}}" method="POST" class="botones formEliminar"> 
-                            <a href="/curso/{{$curso->id}}" class="btn btn-success">Entrar</a>
-                            <a href="/cursos/{{$curso->id}}/edit" class="btn btn-warning">Editar</a>
+                        <form action="{{route('trabajadores.destroy',$trabajador->id)}}" method="POST" class="botones formEliminar">                            
+                            <a href="/trabajadores/{{$trabajador->id}}/edit" class="btn btn-warning">Editar</a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Eliminar</button>

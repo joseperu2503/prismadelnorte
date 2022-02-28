@@ -15,7 +15,7 @@ class CreateAsistenciasTable extends Migration
     {
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_alumno');
+            $table->integer('dni');
             $table->string('estado',20);
             $table->string('tipo',20);
             $table->timestamps();

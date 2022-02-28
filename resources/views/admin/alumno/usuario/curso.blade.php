@@ -1,80 +1,66 @@
 @extends('layouts.appAlumno')
 
 @section('title','Mis notas - '.$curso->nombre)
-
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+@endsection
 @section('content')
 
     <h1 class="titulo">{{$curso->nombre}}</h1>
 
-    @foreach ($bimestres as $bimestre)
-    <button name='select-container' class='bimestre-container' id="boton_{{$bimestre->bimestre}}">
-        <p>{{$bimestre->bimestre}} Bimestre</p>				
-        <i class='fas fa-angle-down'></i>
-    </button>
-    @if ($notas->where('id_bimestre', $bimestre->id)->count()>0)
-        <div class = "tabla-grid tabla-2 @if ($bimestre->bimestre=='Primer')
-            visible
-        @endif "        
-        id="{{$bimestre->bimestre}}"
-        >
-            <div class = "table-header-left">Evaluacion</div>
-            <div class = "table-header-right">Nota</div>
-            @foreach ($notas as $nota) 
-                @if ($nota->id_bimestre == $bimestre->id)
-                    <div class = "table-body">{{$nota->evaluacion}} {{$nota->num_evaluacion}}</div>
-                    <div class = "table-body">
-                        @if ($nota->nota>10)
-                            <p class = "nota-aprobada">{{$nota->nota}}</p> 
-                        @else
-                            <p class = "nota-desaprobada">{{$nota->nota}}</p>   
-                        @endif                   
-                    </div>
-                @endif         
-            @endforeach		
-        </div>
-    @else
-        <div class = "sin_notas @if($bimestre->bimestre=='Primer') visible @endif" id="{{$bimestre->bimestre}}">Aun no hay notas disponibles</div>       
-    @endif
-            
-    @endforeach
-    <script>
-        //Ejecutar función en el evento click
-        document.getElementById("boton_Primer").addEventListener("click", open_primer_bimestre);
-        document.getElementById("boton_Segundo").addEventListener("click", open_segundo_bimestre);
-        document.getElementById("boton_Tercer").addEventListener("click", open_tercer_bimestre);
-        document.getElementById("boton_Cuarto").addEventListener("click", open_cuarto_bimestre);
-    
-        //Declaramos variables
-    
-        var primer = document.getElementById("Primer");
-        var segundo = document.getElementById("Segundo");
-        var tercer = document.getElementById("Tercer");
-        var cuarto = document.getElementById("Cuarto");
-    
-        function open_primer_bimestre(){  
-            segundo.classList.remove("visible");
-            tercer.classList.remove("visible");
-            cuarto.classList.remove("visible"); 
-            primer.classList.add("visible");   
-        }
-        function open_segundo_bimestre(){
-            primer.classList.remove("visible");   
-            tercer.classList.remove("visible");
-            cuarto.classList.remove("visible");
-            segundo.classList.add("visible");   
-        }
-        function open_tercer_bimestre(){
-            primer.classList.remove("visible");
-            segundo.classList.remove("visible"); 
-            cuarto.classList.remove("visible");
-            tercer.classList.add("visible");       
-        }
-        function open_cuarto_bimestre(){
-            primer.classList.remove("visible");
-            segundo.classList.remove("visible");
-            tercer.classList.remove("visible");
-            cuarto.classList.add("visible");       
-        }
-    </script>
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        @foreach ($bimestres as $bimestre)
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-heading{{$bimestre->num_ingles}}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$bimestre->num_ingles}}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{$bimestre->num_ingles}}">
+                    {{$bimestre->bimestre}} Bimestre
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapse{{$bimestre->num_ingles}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{$bimestre->num_ingles}}">
+                <div class="accordion-body">
+                    @if ($notas->where('id_bimestre', $bimestre->id)->count()>0)
+                        <div class="container-sm col-12 col-md-6">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Evaluación
+                                        </th>
+                                        <th>
+                                            Nota
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($notas as $nota)
+                                        @if ($nota->id_bimestre == $bimestre->id)
+                                            <tr>
+                                                <td>
+                                                    {{$nota->evaluacion}} {{$nota->num_evaluacion}}
+                                                </td>
+                                                <td>
+                                                    @if ($nota->nota>10)
+                                                        <p class = "nota-aprobada">{{$nota->nota}}</p> 
+                                                    @else
+                                                        <p class = "nota-desaprobada">{{$nota->nota}}</p>   
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif         
+                                    @endforeach	
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        Aun no hay notas disponibles
+                    @endif
+                </div>
+            </div>
+          </div>
+        @endforeach
+    </div> 
+@endsection
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 @endsection
 

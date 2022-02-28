@@ -8,6 +8,7 @@ use App\Models\Curso;
 use App\Models\Aula;
 use App\Models\Nota;
 use App\Models\Profesor;
+use Illuminate\Support\Facades\DB;
 
 class CursoController extends Controller
 {
@@ -142,11 +143,37 @@ class CursoController extends Controller
             ->where('id_curso', $id)
             ->distinct()
             ->get();
-        $notas = Nota::select('notas.*','alumnos.apellido_paterno')   
-            ->leftjoin('alumnos', 'notas.id_alumno', '=', 'alumnos.id')
-            ->where('id_curso', $id)
-            ->orderBy('alumnos.apellido_paterno', 'asc')
-            ->get();
+        
+
+        $prueba=[];
+        foreach($alumnos as $alumno){
+            $notas_alumno = ["hola"=>"soy"];
+            $prueba += [$alumno->id => $notas_alumno];
+           
+        }
+
+        $notas_tabla = [];
+        foreach($bimestres as $bimestre){
+            $notas_bimestre = [];        
+            foreach($alumnos as $alumno){
+                $notas_alumno = [];              
+                foreach($evaluaciones as $evaluacion){   
+                    if($evaluacion->id_bimestre == $bimestre->id){
+                        $nota = DB::table('notas')                  
+                        ->where('id_curso', $id)
+                        ->where('id_alumno', $alumno->id)
+                        ->where('id_bimestre', $bimestre->id)
+                        ->where('id_evaluacion', $evaluacion->id_evaluacion)
+                        ->where('num_evaluacion', $evaluacion->num_evaluacion)
+                        ->first();       
+                        $notas_alumno += ["$evaluacion->id_evaluacion $evaluacion->num_evaluacion" => $nota->nota];  
+                    }                             
+                }
+                $notas_bimestre += [$alumno->id => $notas_alumno];
+            }
+            $notas_tabla += [$bimestre->id => $notas_bimestre];           
+        }
+        
         return view('admin.curso.perfil.index')
             ->with('curso',$curso)
             ->with('profesor',$profesor)
@@ -154,7 +181,7 @@ class CursoController extends Controller
             ->with('bimestres',$bimestres)
             ->with('alumnos',$alumnos)
             ->with('evaluaciones',$evaluaciones)
-            ->with('notas',$notas);
+            ->with('notas_tabla',$notas_tabla);
     }
 
 }

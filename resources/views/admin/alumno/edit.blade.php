@@ -1,7 +1,9 @@
 @extends('layouts.appAdmin')
 
 @section('title','Editar Alumno')
-
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+@endsection
 @section('content')
 <h1 class="titulo">Editar Alumno</h1>
 <div class="form-container">  
@@ -9,28 +11,37 @@
         @csrf
         @method('PUT')
         <label class="form-label">DNI</label>
-        <input id="dni" name="dni" type="number" class="input-formulario" value="{{$alumno->dni}}">
+        <input id="dni" name="dni" type="number" class="form-control mb-3" value="{{$alumno->dni}}">
         <label class="form-label">Primer nombre</label>
-        <input id="primer_nombre" name="primer_nombre" type="text" class="input-formulario" value="{{$alumno->primer_nombre}}">
+        <input id="primer_nombre" name="primer_nombre" type="text" class="form-control mb-3" value="{{$alumno->primer_nombre}}">
         <label class="form-label">Segundo nombre</label>
-        <input id="segundo_nombre" name="segundo_nombre" type="text" class="input-formulario" value="{{$alumno->segundo_nombre}}">
+        <input id="segundo_nombre" name="segundo_nombre" type="text" class="form-control mb-3" value="{{$alumno->segundo_nombre}}">
         <label class="form-label">Apellido Paterno</label>
-        <input id="apellido_paterno" name="apellido_paterno" type="text" class="input-formulario" value="{{$alumno->apellido_paterno}}">
+        <input id="apellido_paterno" name="apellido_paterno" type="text" class="form-control mb-3" value="{{$alumno->apellido_paterno}}">
         <label class="form-label">Apellido Materno</label>
-        <input id="apellido_materno" name="apellido_materno" type="text" class="input-formulario" value="{{$alumno->apellido_materno}}">
+        <input id="apellido_materno" name="apellido_materno" type="text" class="form-control mb-3" value="{{$alumno->apellido_materno}}">
         <label class="form-label">Telefono</label>
-        <input id="telefono" name="telefono" type="number" class="input-formulario" value="{{$alumno->telefono}}">
+        <input id="telefono" name="telefono" type="number" class="form-control mb-3" value="{{$alumno->telefono}}">
         <label class="form-label">Aula</label>
-        <input id="id_aula" name="id_aula" type="text" class="input-formulario" value="{{$alumno->id_aula}}">
+        <select id="id_aula" name="id_aula" class="form-select mb-3" required>
+            <option selected disabled value="">Seleccione una opción</option>
+            @foreach ($aulas as $aula)
+                @if ($aula->id==$alumno->id_aula)
+                    <option selected value="{{$aula->id}}">{{$aula->grado}} de {{$aula->nivel}}</option>   
+                @else
+                    <option value="{{$aula->id}}">{{$aula->grado}} de {{$aula->nivel}}</option>   
+                @endif            
+            @endforeach                                     
+        </select>
         <label class="form-label">Email</label>
-        <input id="email" name="email" type="text" class="input-formulario" value="{{$alumno->email}}">
+        <input id="email" name="email" type="text" class="form-control mb-3" value="{{$alumno->email}}">
         <label class="form-label">Dirección</label>
-        <input id="direccion" name="direccion" type="text" class="input-formulario" value="{{$alumno->direccion}}">
+        <input id="direccion" name="direccion" type="text" class="form-control mb-3" value="{{$alumno->direccion}}">
         <input type="hidden" class="form-label" name="foto_perfil" value="foto por defecto">
         <label class="form-label">Genero</label>
-        <input id="genero" name="genero" type="text" class="input-formulario" value="{{$alumno->genero}}"> 
+        <input id="genero" name="genero" type="text" class="form-control mb-3" value="{{$alumno->genero}}"> 
         <label class="form-label">Contraseña</label>
-        <input id="password" name="password" type="text" class="input-formulario">  
+        <input id="password" name="password" type="text" class="form-control mb-3">  
         @if($errors->any())
             <div class="alert alert-danger" role="alert">
                 @foreach ($errors->all() as $error)
@@ -39,12 +50,12 @@
             </div>
         @endif
         <div class="buttons-form">
-            <a href="/alumnos">
-                <button type="button" class="boton btn-rojo" >Cancelar</button>
-            </a>
-            <button type="submit" class="boton btn-verde" tabindex="1">Actualizar</button>
+            <a href="/alumnos/{{$alumno->id_aula}}" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-success" >Actualizar</button>
         </div>          
     </form>
 </div>
-
+@endsection
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 @endsection

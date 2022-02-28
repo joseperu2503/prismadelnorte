@@ -1,7 +1,6 @@
 @extends('layouts.appAdmin')
 
 @section('title','Profesores')
-
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
@@ -17,7 +16,7 @@
         <table id="table_id" class = "table table-hover">
             <thead>
                 <tr>
-                    <th >ID</th>
+                    <th scope="col">ID</th>
                     <th scope="col">DNI</th>
                     <th scope="col">Apellido Paterno</th>
                     <th scope="col">Apellido Materno</th>		
@@ -29,13 +28,13 @@
             <tbody>
                 @foreach ($profesores as $profesor)
                 <tr>
-                    <td>{{$profesor->id}}</td>
-                    <td>{{$profesor->dni}}</td>
-                    <td>{{$profesor->apellido_paterno}}</td>	
-                    <td>{{$profesor->apellido_materno}}</td>	
-                    <td>{{$profesor->primer_nombre}}</td>
-                    <td>{{$profesor->segundo_nombre}}</td>							
-                    <td>     
+                    <td class="align-middle">{{$profesor->id}}</td>
+                    <td class="align-middle">{{$profesor->dni}}</td>
+                    <td class="align-middle">{{ucwords($profesor->apellido_paterno)}}</td>	
+                    <td class="align-middle">{{ucwords($profesor->apellido_materno)}}</td>	
+                    <td class="align-middle">{{ucwords($profesor->primer_nombre)}}</td>
+                    <td class="align-middle">{{ucwords($profesor->segundo_nombre)}}</td>							
+                    <td class="align-middle">     
                         <form action="{{route('profesores.destroy',$profesor->id)}}" method="POST" class="botones formEliminar"> 
                             <a href="/profesor/{{$profesor->id}}" class="btn btn-success">Entrar</a>
                             <a href="/profesores/{{$profesor->id}}/edit" class="btn btn-warning">Editar</a>

@@ -17,6 +17,7 @@ class CreateBimestresTable extends Migration
             $table->id();
             $table->integer('num_bimestre');
             $table->string('bimestre',20);
+            $table->string('num_ingles',20);
             $table->timestamps();
         });
     }

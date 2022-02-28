@@ -11,7 +11,10 @@ use App\Http\Controllers\AulaController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\NotaController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfesorController;
+use App\Http\Controllers\TrabajadorController;
+use App\Models\Trabajador;
 use Illuminate\Support\Facades\URL;
 
 Route::get('/', function () {
@@ -61,7 +64,7 @@ Route::get('/curso/{id_curso}/{id_bimestre}/{id_evaluacion}/{num_evaluacion}/edi
     ->name('nota.edit');
 
 Route::put('/curso/{id}/update', [NotaController::class,'update'])
-->middleware('auth.profesor') //admin y profesor
+    ->middleware('auth.profesor') //admin y profesor
     ->name('nota.update');
 
 Route::put('/notas/destroy', [NotaController::class,'destroy'])
@@ -86,14 +89,17 @@ Route::get('/profesor', [ProfesorController::class,'index_usuario'])
 Route::get('mis_cursos', [ProfesorController::class,'cursos_usuario'])
     ->middleware('auth.profesor')
     ->name('profesor.mis_cursos');
+    
 
-
-
+//Alumno admin
 Route::get('alumnos/{aula_id}', [AlumnoController::class,'index'])
+    ->middleware('auth.admin')
     ->name('alumno.index');
 
-Route::resource('alumnos',AlumnoController::class);
+Route::resource('alumnos',AlumnoController::class)
+    ->middleware('auth.admin');
 Route::get('/alumnos/{id}/create', [AlumnoController::class,'create'])
+    ->middleware('auth.admin')
     ->name('alumno.create');
 
 
@@ -103,7 +109,7 @@ Route::get('/alumno', [AlumnoController::class,'index_usuario'])
     ->middleware('auth.estudiante')
     ->name('alumno.usuario.index');    
 
-Route::get('/alumno/perfil', [AlumnoController::class,'perfil'])
+Route::get('/alumno/perfil', [AlumnoController::class,'perfil_usuario'])
     ->middleware('auth.estudiante')
     ->name('alumno.usuario.perfil');
 
@@ -111,19 +117,31 @@ Route::put('/alumno/{id}/actualizar_foto', [AlumnoController::class,'update_foto
     ->middleware('auth.estudiante')
     ->name('alumno.usuario.update_foto');
 
-Route::get('/alumno/cursos', [AlumnoController::class,'cursos'])
+Route::get('/alumno/cursos', [AlumnoController::class,'cursos_usuario'])
     ->middleware('auth.estudiante')
     ->name('alumno.usuario.cursos');
 
-Route::get('/alumno/cursos/{codigo_curso}', [AlumnoController::class,'curso'])
+Route::get('/alumno/cursos/{codigo_curso}', [AlumnoController::class,'curso_usuario'])
     ->middleware('auth.estudiante')
     ->name('alumno.usuario.curso');
 
+Route::get('/alumno/mi_asistencia', [AlumnoController::class,'asistencia_usuario'])
+    ->middleware('auth.estudiante') 
+    ->name('alumno.usuario.asistencia');  
+
 //Asistencia
 
-Route::get('/asistencias', [AsistenciaController::class,'index'])
+Route::get('/asistencia_alumnos', [AsistenciaController::class,'index_alumnos'])
     ->middleware('auth.admin') 
-    ->name('asistencia.index');
+    ->name('asistencia.index_alumnos');
+
+Route::get('/asistencia_profesores', [AsistenciaController::class,'index_profesores'])
+    ->middleware('auth.admin') 
+    ->name('asistencia.index_profesores');
+
+Route::get('/asistencia_trabajadores', [AsistenciaController::class,'index_trabajadores'])
+    ->middleware('auth.admin') 
+    ->name('asistencia.index_trabajadores');
 
 Route::get('/nueva_asistencia', [AsistenciaController::class,'create'])
     ->middleware('auth.admin') 
@@ -133,19 +151,12 @@ Route::put('/agregando_asistencia', [AsistenciaController::class,'store'])
     ->middleware('auth.admin') 
     ->name('asistencia.store');
 
+//Trabajadores
 
-// Route::get('/alumno', [EstudianteController::class,'index'])
-//     ->middleware('auth.estudiante')
-//     ->name('estudiante.index');
+Route::resource('trabajadores',TrabajadorController::class)
+    ->middleware('auth.admin');
 
-// Route::get('/alumno/cursos', [EstudianteController::class,'cursos'])
-//     ->middleware('auth.estudiante')
-//     ->name('estudiante.cursos');
+//Posts
 
-// Route::get('/alumno/perfil', [EstudianteController::class,'perfil'])
-//     ->middleware('auth.estudiante')
-//     ->name('estudiante.perfil');
-
-// Route::put('/alumno/{id}/actualizar', [EstudianteController::class,'update'])
-//     ->middleware('auth.estudiante')
-//     ->name('estudiante.update');
+Route::resource('publicaciones',PostController::class)
+    ->middleware('auth.admin');

@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1 class="titulo">Alumnos de {{$aula->grado}} de {{$aula->nivel}}</h1>
+    <h1 class="titulo">Alumnos de {{ucwords($aula->grado)}} de {{ucwords($aula->nivel)}}</h1>
     <a href="/alumnos/{{$aula->id}}/create" class="btn btn-success mb-4">Nuevo</a>
 
 
@@ -32,11 +32,11 @@
                         <tr>
                             <td class="align-middle">{{$alumno->id}}</td>
                             <td class="align-middle">{{$alumno->dni}}</td>
-                            <td class="align-middle">{{$alumno->apellido_paterno}}</td>	
-                            <td class="align-middle">{{$alumno->apellido_materno}}</td>	
-                            <td class="align-middle">{{$alumno->primer_nombre}}</td>
-                            <td class="align-middle">{{$alumno->segundo_nombre}}</td>	
-                            <td class="align-middle"><img src="/storage/fotos_perfil/{{$alumno->foto_perfil}}" alt="" class="foto"></td>						
+                            <td class="align-middle">{{ucwords($alumno->apellido_paterno)}}</td>	
+                            <td class="align-middle">{{ucwords($alumno->apellido_materno)}}</td>	
+                            <td class="align-middle">{{ucwords($alumno->primer_nombre)}}</td>
+                            <td class="align-middle">{{ucwords($alumno->segundo_nombre)}}</td>	
+                            <td class="align-middle"><img src="{{$alumno->foto_perfil}}" alt="" class="foto"></td>						
                             <td class="align-middle">     
                                 <form action="{{route('alumnos.destroy',$alumno->id)}}" method="POST" class="botones formEliminar"> 
                                     <a href="" class="btn btn-success">Entrar</a>

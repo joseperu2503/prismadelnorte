@@ -1,10 +1,12 @@
 @extends((auth()->user()->role == 'profesor') ? 'layouts.appProfesor' : 'layouts.appAdmin')
 
-@section('title','Cursos')
-
+@section('title','Agregar notas')
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+@endsection
 @section('content')
 
-    <h1 class="titulo">{{$curso->nombre}} - {{$aula->grado}} de {{$aula->nivel}}</h1>
+    <h1 class="titulo">{{mb_convert_case($curso->nombre, MB_CASE_TITLE, "UTF-8")." - ".ucwords($aula->grado)." de ".ucwords($aula->nivel)}}</h1>
     
     <div class="agregar-notas-container">
         <h2 class="agregar-notas">Agregar Notas</h2>
@@ -21,55 +23,53 @@
         @method('PUT')         
         <div class="tipo_evaluacion">
             <label class="form-label">Bimestre</label>
-            <div class="select-container">
-                <select name="id_bimestre" class="input-formulario select-form" required>
-                    <option selected disabled value="">Seleccione una opción</option>
-                    @foreach ($bimestres as $bimestre)
-                        <option @if (old('id_bimestre') == $bimestre->id)
-                            selected
-                        @endif value="{{$bimestre->id}}">{{$bimestre->bimestre}} Bimestre</option>
-                    @endforeach                                     
-                </select>
-                <i class="fas fa-angle-down"></i>
-            </div>
+            <select name="id_bimestre" class="form-select mb-3" required>
+                <option selected disabled value="">Seleccione una opción</option>
+                @foreach ($bimestres as $bimestre)
+                    <option @if (old('id_bimestre') == $bimestre->id)
+                        selected
+                    @endif value="{{$bimestre->id}}">{{$bimestre->bimestre}} Bimestre</option>
+                @endforeach                                     
+            </select>            
             <label class="form-label">Tipo de evaluación</label>
-            <div class="select-container">
-                <select name="id_evaluacion" class="input-formulario select-form" required>
-                    <option selected disabled value="">Seleccione una opción</option>
-                    @foreach ($evaluaciones as $evaluacion)
-                        <option @if (old('id_evaluacion') == $evaluacion->id)
-                            selected
-                        @endif value="{{$evaluacion->id}}">{{$evaluacion->evaluacion}}</option>
-                    @endforeach                                     
-                </select>
-                <i class="fas fa-angle-down"></i>
-            </div>            
+            <select name="id_evaluacion" class="form-select mb-3" required>
+                <option selected disabled value="">Seleccione una opción</option>
+                @foreach ($evaluaciones as $evaluacion)
+                    <option @if (old('id_evaluacion') == $evaluacion->id)
+                        selected
+                    @endif value="{{$evaluacion->id}}">{{$evaluacion->evaluacion}}</option>
+                @endforeach                                     
+            </select>                         
             <label class="form-label">Numero de evaluación</label>
-            <input id="num_evaluacion" name="num_evaluacion" type="number" class="input-formulario" value="{{old('num_evaluacion')}}" required>                  
+            <input id="num_evaluacion" name="num_evaluacion" type="number" class="form-control mb-3" value="{{old('num_evaluacion')}}" required>                  
         </div>
-        
-        <div class = "tabla-grid tabla-3">
-            <div class = "table-header-left">Foto</div>
-            <div class = "table-header-center">Apellidos y nombres</div>
-            <div class = "table-header-right">Nota</div>		
-            @foreach ($alumnos as $alumno)                         
-                <div class = "table-body">
-                    <img class = "foto" src="/storage/fotos_perfil/{{$alumno->foto_perfil}}" alt="">
-                </div>	
-                <div class = "table-body">{{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->primer_nombre}} {{$alumno->segundo_nombre}}</div>
-                <div class = "table-body">
-                    <input type="text" class="input-formulario" name="nota_{{$alumno->id}}" placeholder="Insertar" required value="{{old('nota_'.$alumno->id)}}">         
-                </div>	
-            @endforeach
+        <div class="table-responsive">
+            <table class = "table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Nota</th>
+                    </tr>  
+                </thead>
+                <tbody>
+                    @foreach ($alumnos as $alumno)
+                        <tr>
+                            <td class="align-middle"><img class = "foto" src="/storage/fotos_perfil/{{$alumno->foto_perfil}}" alt=""></td>
+                            <td class="align-middle">{{ucwords($alumno->apellido_paterno." ".$alumno->apellido_materno." ".$alumno->primer_nombre." ".$alumno->segundo_nombre)}}</td>
+                            <td class="align-middle"><input type="number" class="form-control mb-3" name="nota_{{$alumno->id}}" required value="{{old('nota_'.$alumno->id)}}"></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
         <div class="buttons-form"> 
-            <a href="/curso/{{$curso->id}}" tabindex="5">
-                <button type="button" class="cancelar" >Cancelar</button>
-            </a>       
-            <input type="submit" class = "hecho" value = "Enviar">
+            <a href="/curso/{{$curso->id}}" class="btn btn-danger">Cancelar</a>       
+            <input type="submit" class = "btn btn-success" value = "Enviar">
         </div>
         <input name="id_curso" type="hidden" value="{{$curso->id}}">
-    </form>
-
-    
+    </form> 
+@endsection
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 @endsection

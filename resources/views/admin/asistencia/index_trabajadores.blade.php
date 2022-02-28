@@ -6,10 +6,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.4/datatables.min.css"/>
 @endsection
 
-@section('title','Asistencia')
+@section('title','Asistencia de trabajadores')
 
 @section('content')
-<h1 class = "titulo">Registro de Asistencias</h1>
+<h1 class = "titulo">Asistencia de trabajadores</h1>
 <div class="table-responsive">
     <table id="table_id" class = "table table-hover">
         <thead>
@@ -19,7 +19,6 @@
                 <th scope="col">Apellido Materno</th>
                 <th scope="col">Primer Nombre</th>
                 <th scope="col">Segundo Nombre</th>
-                <th scope="col" >Aula</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Estado</th>
@@ -29,11 +28,10 @@
             @foreach ($asistencias as $asistencia)
             <tr>
                 <td class="align-middle">{{$asistencia->dni}}</td>
-                <td class="align-middle">{{$asistencia->apellido_paterno}}</td>
-                <td class="align-middle">{{$asistencia->apellido_materno}}</td>
-                <td class="align-middle">{{$asistencia->primer_nombre}}</td>
-                <td class="align-middle">{{$asistencia->segundo_nombre}}</td>
-                <td class="align-middle">{{$asistencia->grado}} de {{$asistencia->nivel}}</td>
+                <td class="align-middle">{{ucwords($asistencia->apellido_paterno)}}</td>
+                <td class="align-middle">{{ucwords($asistencia->apellido_materno)}}</td>
+                <td class="align-middle">{{ucwords($asistencia->primer_nombre)}}</td>
+                <td class="align-middle">{{ucwords($asistencia->segundo_nombre)}}</td>
                 <td class="align-middle">{{$asistencia->created_at->format('d/m/Y')}}</td>
                 <td class="align-middle">{{$asistencia->created_at->format('H:i:s')}}</td>
                 <td class="align-middle">

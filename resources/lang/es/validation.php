@@ -32,9 +32,9 @@ return [
     "date"             => ":attribute no es una fecha válida.",
     "date_format"      => ":attribute no corresponde al formato :format.",
     "different"        => ":attribute y :other deben ser diferentes.",
-    "digits"           => ":attribute debe tener :digits dígitos.",
+    "digits"           => "El campo :attribute debe tener :digits dígitos.",
     "digits_between"   => ":attribute debe tener entre :min y :max dígitos.",
-    "email"            => ":attribute no es un correo válido",
+    "email"            => "El email ingresado no es valido",
     "exists"           => ":attribute es inválido.",
     "filled"           => "El campo :attribute es obligatorio.",
     "image"            => ":attribute debe ser una imagen.",
@@ -104,7 +104,16 @@ return [
     */
 
     'attributes' => [
-        
+        'dni' => 'DNI',
+        'primer_nombre' => 'Primer Nombre',
+        'segundo_nombre' => 'Segundo Nombre',
+        'apellido_paterno' => 'Apellido Paterno',
+        'apellido_materno' => 'Apellido Materno',
+        'telefono' => 'Telefono',
+        'email' => 'Email',
+        'direccion' => 'Dirección',
+        'genero' => 'Género',
+        'password' => 'Contraseña',
     ],
 
 ];

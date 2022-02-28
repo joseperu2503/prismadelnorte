@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
-<html lang="en" dir="ltr">
+<html lang="es" dir="ltr">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,23 +57,17 @@
         </ul>
       </li>
       <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-book-alt' ></i>
-            <span class="link_name">Posts</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow' ></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Posts</a></li>
-          <li><a href="#">Web Design</a></li>
-          <li><a href="#">Login Form</a></li>
-          <li><a href="#">Card Design</a></li>
+        <a href="/publicaciones">
+          <i class='bx bx-book-alt' ></i>
+          <span class="link_name">Publicaciones</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Publicaciones</a></li>
         </ul>
       </li>
       <li>
         <a href="/aulas">
-          <i class="fas fa-graduation-cap"title="Aulas"></i>
+          <i class="fas fa-graduation-cap"></i>
           <span class="link_name">Aulas</span>
         </a>
         <ul class="sub-menu blank">
@@ -82,7 +76,7 @@
       </li>
       <li>
         <a href="/profesores">
-          <i class="fas fa-chalkboard-teacher" title="Profesores"></i>
+          <i class="fas fa-chalkboard-teacher"></i>
           <span class="link_name">Profesores</span>
         </a>
         <ul class="sub-menu blank">
@@ -91,7 +85,7 @@
       </li>
       <li>
         <a href="/cursos">
-          <i class="fas fa-book" title="Cursos"></i>
+          <i class="fas fa-book"></i>
           <span class="link_name">Cursos</span>
         </a>
         <ul class="sub-menu blank">
@@ -101,15 +95,26 @@
       <li>
         <div class="iocn-link">
           <a href="#">
-            <i class="fas fa-check-double" title="Asistencia"></i>
+            <i class="fas fa-check-double"></i>
             <span class="link_name">Asistencia</span>
           </a>
           <i class='bx bxs-chevron-down arrow' ></i>
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="#">Asistencia</a></li>
-          <li><a href="/asistencias">Registro de asistencias</a></li>
+          <li><a href="/asistencia_alumnos">Alumnos</a></li>
+          <li><a href="/asistencia_profesores">Profesores</a></li>
+          <li><a href="/asistencia_trabajadores">Trabajadores</a></li>
           <li><a href="/nueva_asistencia">Registrar asistencia</a></li>          
+        </ul>
+      </li>
+      <li>
+        <a href="/trabajadores">
+          <i class="fas fa-briefcase"></i>
+          <span class="link_name">Personal Complementario</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Personal Complementario</a></li>
         </ul>
       </li>
       <li>
@@ -145,8 +150,8 @@
             <!--<img src="image/profile.jpg" alt="profileImg">-->
           </div>
           <div class="name-job">
-            <div class="profile_name">Prem Shahi</div>
-            <div class="job">Web Desginer</div>
+            <div class="profile_name">Cerrar Sesión</div>
+            
           </div>
           <a href="{{route('login.destroy')}}">
             <i class='bx bx-log-out' ></i>
@@ -164,8 +169,6 @@
   </section>
 
   <script src="{{asset('js/sidebar.js')}}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
   @yield('js')
 </body>
 </html>

@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Aula;
 use App\Models\Alumno;
+use App\Models\Asistencia;
 use App\Models\Bimestre;
 use App\Models\Nota;
+use App\Models\Post;
+use App\Models\Profesor;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AlumnoController extends Controller
 {
@@ -44,7 +48,7 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'dni' => 'required',
+            'dni' => 'required|numeric|digits:8',
             'primer_nombre' => 'required',
             'segundo_nombre' => 'required',
             'apellido_paterno' => 'required',
@@ -57,21 +61,10 @@ class AlumnoController extends Controller
             'password' => 'required'
         ]);
 
-        $alumnos = new Alumno();
-
-        $alumnos->dni = $request->get('dni');
-        $alumnos->primer_nombre = $request->get('primer_nombre');
-        $alumnos->segundo_nombre = $request->get('segundo_nombre');
-        $alumnos->apellido_paterno = $request->get('apellido_paterno');
-        $alumnos->apellido_materno = $request->get('apellido_materno');
-        $alumnos->id_aula = $request->get('id_aula');
-        $alumnos->telefono = $request->get('telefono');
-        $alumnos->email = $request->get('email');
-        $alumnos->direccion = $request->get('direccion');
-        $alumnos->foto_perfil = 'estudiante.png';
-        $alumnos->genero = $request->get('genero');
-        $alumnos->password = $request->get('password');
-        $alumnos->save();
+        Alumno::create([
+            'foto_perfil' => '/storage/fotos_perfil/estudiante.png'
+        ]+$request->all());
+    
 
         $user = new User();
         $user->dni = $request->get('dni');
@@ -102,7 +95,8 @@ class AlumnoController extends Controller
     public function edit($id)
     {
         $alumno = Alumno::find($id);
-        return view('admin.alumno.edit')->with('alumno',$alumno);
+        $aulas = Aula::all();
+        return view('admin.alumno.edit')->with('alumno',$alumno)->with('aulas',$aulas);      
     }
 
     /**
@@ -113,8 +107,9 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   $request->validate([
-            'dni' => 'required',
+    {   
+        $request->validate([
+            'dni' => 'required|numeric|digits:8',
             'primer_nombre' => 'required',
             'segundo_nombre' => 'required',
             'apellido_paterno' => 'required',
@@ -127,8 +122,18 @@ class AlumnoController extends Controller
         ]);
         
         $alumno = Alumno::find($id);
+       
+        if($request->get('password')!='' || $request->get('dni') != $alumno->dni){
+            $user = User::select('*')->where('dni', $alumno->dni)->first();
+            if($request->get('dni') != $alumno->dni){
+                $user->dni = $request->get('dni') ;
+            }          
+            if($request->get('password')!=''){
+                $user->password = $request->get('password') ;
+            }
+            $user->save();
+        }
         $alumno->update($request->all());
-
         return redirect('/alumnos/'.$request->get('id_aula'));
     }
 
@@ -141,6 +146,8 @@ class AlumnoController extends Controller
     public function destroy($id)
     {
         $alumno = Alumno::find($id);
+        $user = User::select('*')->where('dni', $alumno->dni)->first();
+        $user->delete();
         $alumno->delete();
         return redirect()->back();
     }
@@ -149,10 +156,29 @@ class AlumnoController extends Controller
     {
         $dni = auth()->user()->dni;
         $alumno = DB::table('alumnos')->where('dni', $dni)->first();
-        return view('admin.alumno.usuario.index')->with('alumno',$alumno);
+        $posts = Post::select('posts.*','users.dni','users.role')
+        ->leftjoin('users', 'posts.id_user', '=', 'users.id')
+        ->orderby('created_at','desc')
+        ->get();
+        foreach($posts as $post){
+            if($post->role=='profesor'){
+                $profesor=Profesor::select('*')
+                    ->where('dni',$post->dni)
+                    ->first();
+                $post['autor']=$profesor->primer_nombre." ".$profesor->apellido_paterno;
+                $post['autor_imagen']=$profesor->foto_perfil;
+            }
+            else if($post->role=='admin'){
+                $post['autor']='Administración';
+                $post['autor_imagen']='logo.png';
+            }
+
+        }  
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        return view('admin.alumno.usuario.index')->with('alumno',$alumno)->with('posts',$posts)->with('meses',$meses);
     }
 
-    public function perfil()
+    public function perfil_usuario()
     {   
         $dni = auth()->user()->dni;
         $alumno = DB::table('alumnos')->where('dni', $dni)->first();
@@ -163,27 +189,44 @@ class AlumnoController extends Controller
 
     public function update_foto(Request $request,$id)
     {   
-        $dni = auth()->user()->dni;
-        $alumno = DB::table('alumnos')->where('dni', $dni)->first();
-        $id_aula = $alumno->id_aula;
-        $aula = DB::table('aulas')->where('id', $id_aula)->first();
 
-        if($imagen = $request->file('foto_perfil')){
+        $request->validate([
+            'foto_perfil' => 'image|mimes:jpeg,png,jpg'
+        ]);
+        $alumno = Alumno::find($id);
+        if($imagen = $request->file('foto_perfil')) {         
+            $nombre_img = date('YmdHis'). "." . $request->file('imagen')->getClientOriginalExtension();
+            $imagen = $request->file('imagen')->storeAs('fotos_perfil',$nombre_img,'public');
+            $datos['foto_perfil'] = Storage::url($imagen);
+            if($alumno->foto_perfil != '/storage/fotos_perfil/estudiante.png'){
+                Storage::delete(str_replace("storage", "public", $alumno->foto_perfil)); 
+            }
+        }
+            
+        $alumno->update($datos);
+        return redirect()->route('alumno.usuario.perfil');
+
+        // $dni = auth()->user()->dni;
+        // $alumno = DB::table('alumnos')->where('dni', $dni)->first();
+        // $id_aula = $alumno->id_aula;
+        // $aula = DB::table('aulas')->where('id', $id_aula)->first();
+
+        // if($imagen = $request->file('foto_perfil')){
         
-            $rutaGuardarImg = 'storage/fotos_perfil/';
-            $imagenAlumno = $imagen->getClientOriginalName(); 
-            $imagen->move($rutaGuardarImg, $imagenAlumno);
-            $alum = Alumno::find($id);
-            $alum->foto_perfil = $imagenAlumno ;
-            $alum->save();
+        //     $rutaGuardarImg = 'storage/fotos_perfil/';
+        //     $imagenAlumno = $imagen->getClientOriginalName(); 
+        //     $imagen->move($rutaGuardarImg, $imagenAlumno);
+        //     $alum = Alumno::find($id);
+        //     $alum->foto_perfil = $imagenAlumno ;
+        //     $alum->save();
         
-            return redirect()->route('alumno.usuario.perfil');
-        }else{
-            return redirect()->route('alumno.usuario.perfil');
-        }           
+        //     return redirect()->route('alumno.usuario.perfil');
+        // }else{
+        //     return redirect()->route('alumno.usuario.perfil');
+        // }           
     }
 
-    public function cursos()
+    public function cursos_usuario()
     {   
         $dni = auth()->user()->dni;
         $alumno = DB::table('alumnos')->where('dni', $dni)->first();
@@ -192,7 +235,7 @@ class AlumnoController extends Controller
         return view('admin.alumno.usuario.cursos')->with('cursos',$cursos)->with('alumno',$alumno);
     }
 
-    public function curso($codigo)
+    public function curso_usuario($codigo)
     {   
         $dni = auth()->user()->dni;
         $alumno = DB::table('alumnos')->where('dni', $dni)->first();
@@ -208,6 +251,17 @@ class AlumnoController extends Controller
             ->with('alumno',$alumno)
             ->with('bimestres',$bimestres)
             ->with('notas',$notas);
+    }
+
+    public function asistencia_usuario()
+    {   
+        $dni = auth()->user()->dni;
+        $alumno = DB::table('alumnos')->where('dni', $dni)->first();
+        $asistencias = Asistencia::select('*')                  
+            ->where('id_alumno', $alumno->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.alumno.usuario.asistencia')->with('asistencias',$asistencias)->with('alumno',$alumno);
     }
     
 }

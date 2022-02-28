@@ -19,10 +19,16 @@ class AdminAuth
         if(auth()->check()){
             if(auth()->user()->role == 'admin'){
                 return $next($request);
+            }else if(auth()->user()->role == 'alumno'){
+                return redirect()->to('/alumno');
             }
+            else if(auth()->user()->role == 'profesor'){
+                return redirect()->to('/profesor');
+            }
+
             
         }
-        return redirect()->to('/');
+        return redirect()->to('/login');
         
     }
 }

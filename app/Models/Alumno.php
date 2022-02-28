@@ -18,8 +18,10 @@ class Alumno extends Model
         'telefono',
         'email',
         'direccion',
+        'foto_perfil',
         'genero',
-        'password'
+        'password',
+        'id_aula'
     ];
 
     public function setPasswordAttribute($password){

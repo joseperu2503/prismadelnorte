@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
         $alumno->telefono = '993689145';
         $alumno->email = 'joseperu2503@gmail.com';
         $alumno->direccion = 'al costado de la panaderia';
-        $alumno->foto_perfil = 'estudiante.png';
+        $alumno->foto_perfil = '/storage/fotos_perfil/estudiante.png';
         $alumno->genero = 'masculino';
         $alumno->password = 'rama';
         $alumno->save();
@@ -188,6 +188,7 @@ class DatabaseSeeder extends Seeder
         $profesor->direccion = 'al costado de la panaderia';
         $profesor->genero = 'masculino';
         $profesor->foto_perfil = 'man.png';
+        $profesor->password = 'mama';
         $profesor->save();
 
         $user = new User;
@@ -229,21 +230,25 @@ class DatabaseSeeder extends Seeder
         $bimestre = new Bimestre;
         $bimestre->num_bimestre = '1';
         $bimestre->bimestre = 'Primer';
+        $bimestre->num_ingles = 'One';
         $bimestre->save();
 
         $bimestre = new Bimestre;
         $bimestre->num_bimestre = '2';
         $bimestre->bimestre = 'Segundo';
+        $bimestre->num_ingles = 'Two';
         $bimestre->save();
 
         $bimestre = new Bimestre;
         $bimestre->num_bimestre = '3';
         $bimestre->bimestre = 'Tercer';
+        $bimestre->num_ingles = 'Three';
         $bimestre->save();
 
         $bimestre = new Bimestre;
         $bimestre->num_bimestre = '4';
         $bimestre->bimestre = 'Cuarto';
+        $bimestre->num_ingles = 'Four';
         $bimestre->save();
 
         $evaluacion = new Evaluacion;

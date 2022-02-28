@@ -8,7 +8,7 @@
 <div class = "perfil-fondo">
     <div class = "perfil-container">
         <div class = "perfil-encabezado">
-            <img class = "perfil-imagen" src="/storage/fotos_perfil/{{$alumno->foto_perfil}}" alt="foto de perfil">
+            <img class = "perfil-imagen" src="{{$alumno->foto_perfil}}" alt="foto de perfil">
             <button title="Cambiar foto" class = "camera" id="btn-abrir-popup-nuevo">
                 <i class="fas fa-camera "></i>
             </button>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="imagen">
-            <img src="/storage/fotos_perfil/{{$alumno->foto_perfil}}" width="200px" id="imagenSeleccionada">
+            <img src="{{$alumno->foto_perfil}}" width="200px" id="imagenSeleccionada">
         </div>  
         <form  id="upload_image" action="/alumno/{{$alumno->id}}/actualizar_foto" class="form-horizontal" method="POST" enctype="multipart/form-data">
             @csrf

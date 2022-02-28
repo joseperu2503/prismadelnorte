@@ -1,30 +1,36 @@
 @extends('layouts.appProfesor')
 
 @section('title','Cursos')
-
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+@endsection
 @section('content')
 
     <h1 class="titulo">Cursos</h1>
-    <div class = "tabla-grid tabla-6">
-        <div class = "table-header-left">ID</div>
-        <div class = "table-header-center">Código</div>
-        <div class = "table-header-center">Nombre</div>
-        <div class = "table-header-center">Profesor</div>		
-        <div class = "table-header-center">Aula</div>				
-        <div class = "table-header-right">Acciones</div>
-        
-        @foreach ($cursos as $curso)
-            <div class = "table-body">{{$curso->id}}</div>
-            <div class = "table-body">{{$curso->codigo}}</div>
-            <div class = "table-body">{{$curso->nombre}}</div>	
-            <div class = "table-body">{{$curso->primer_nombre}} {{$curso->apellido_paterno}}</div>	
-            <div class = "table-body">{{$curso->grado}} de {{$curso->nivel}}</div>								
-            <div class = "acciones-3">
-                <a href="/curso/{{$curso->id}}">
-                    <button class="boton btn-verde">Entrar</button>
-                </a>             
-                </form>
-            </div>	      
-        @endforeach        
-    </div>    
+
+    <div class="table-responsive">
+        <table class = "table table-hover">
+            <thead>
+                <tr>                    
+                    <th scope="col">Código</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Aula</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cursos as $curso)
+                    <tr>
+                        <td class="align-middle">{{$curso->codigo}}</td>
+                        <td class="align-middle">{{mb_convert_case($curso->nombre, MB_CASE_TITLE, "UTF-8")}}</td>
+                        <td class="align-middle">{{ucwords($curso->grado)}} de {{ucwords($curso->nivel)}}</td>
+                        <td><a href="/curso/{{$curso->id}}" class="btn btn-success">Entrar</a></td>
+                    </tr>      
+                @endforeach        
+            </tbody>
+        </table>
+    </div>
+@endsection
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 @endsection
