@@ -308,12 +308,12 @@ header{
 
   .sidebar.close ~ .home-section{
     left: 78px;
-    width: 100%;
+    width: calc(100% - 78px);
   }
 
   .home-section{
     left: 78px;
-    width: 100%;
+    width: calc(100% - 78px);
   }
 }
 

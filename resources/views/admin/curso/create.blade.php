@@ -10,20 +10,22 @@
     <div class="form-container">  
         <form action="/cursos" method="POST">
             @csrf
-            <label class="form-label">Código</label>
-            <input id="codigo" name="codigo" type="text" class="form-control mb-3" tabindex="1" value="{{old('codigo')}}" required>
-            <label class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control mb-3" tabindex="2" value="{{old('nombre')}}" required>
-            <label class="form-label">Aula</label>
+            <label class="form-label">Código*</label>
+            <input id="codigo" name="codigo" type="text" class="form-control" value="{{old('codigo')}}" required>
+            <div id="emailHelp" class="form-text mb-3">Usar solo mayusculas y números.</div>
+            <label class="form-label">Nombre*</label>
+            <input id="nombre" name="nombre" type="text" class="form-control " value="{{old('nombre')}}" required>
+            <div id="emailHelp" class="form-text mb-3">Usar mayusculas y minusculas.</div>
+            <label class="form-label">Aula*</label>
  
             <select id="id_aula" name="id_aula" class="form-select mb-3" required>
                 <option selected disabled value="">Seleccione una opción</option>
                 @foreach ($aulas as $aula)
-                    <option value="{{$aula->id}}">{{$aula->grado}} de {{$aula->nivel}}</option>
+                    <option value="{{$aula->id}}">{{$aula->aula}}</option>
                 @endforeach                                     
             </select>
   
-            <label class="form-label">Profesor</label>
+            <label class="form-label">Profesor*</label>
 
             <select name="id_profesor" class="form-select mb-3" required>
                 <option selected disabled value="">Seleccione una opción</option>

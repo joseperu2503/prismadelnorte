@@ -15,13 +15,29 @@ class Alumno extends Model
         'segundo_nombre',
         'apellido_paterno',
         'apellido_materno',
-        'telefono',
+        'fecha_nacimiento'=>'datetime:d/m/Y',
+        'departamento',
+        'provincia',
+        'distrito',
+        'religion',
+        'discapacidad',
+        'telefono',      
         'email',
         'direccion',
         'foto_perfil',
-        'genero',
+        'id_genero',
         'password',
-        'id_aula'
+        'id_grado',
+        'id_aula',
+        'nombre_padre',
+        'dni_padre',
+        'telefono_padre',
+        'nombre_madre',
+        'dni_madre',
+        'telefono_madre',
+        'nombre_apoderado',
+        'dni_apoderado',
+        'telefono_apoderado'
     ];
 
     public function setPasswordAttribute($password){

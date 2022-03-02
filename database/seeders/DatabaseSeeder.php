@@ -10,6 +10,11 @@ use App\Models\Bimestre;
 use App\Models\Profesor;
 use App\Models\Curso;
 use App\Models\Evaluacion;
+use App\Models\Genero;
+use App\Models\Grado;
+use App\Models\Nivel;
+use App\Models\niveles;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,161 +26,215 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $genero = new Genero();
+        $genero->genero = 'Masculino';
+        $genero->save();
+
+        $genero = new Genero();
+        $genero->genero = 'Femenino';
+        $genero->save();
+
+        $grado = new Grado();
+        $grado->grado = '3 años';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = '4 años';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = '5 años';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Primer Grado de Primaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Segundo Grado de Primaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Tercer Grado de Primaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Cuarto Grado de Primaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Quinto Grado de Primaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Sexto Grado de Primaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Primer Año de Secundaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Segundo Año de Secundaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Tercer Año de Secundaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Cuarto Año de Secundaria';
+        $grado->save();
+
+        $grado = new Grado();
+        $grado->grado = 'Quinto Año de Secundaria';
+        $grado->save();
+
+
+
         $user = new User;
         $user->dni = '74706220';
         $user->password = 'pegi';
         $user->role = 'admin';
         $user->save();
 
+        $nivel = new Nivel();
+        $nivel->nivel = 'Inicial';
+        $nivel->save();
+
+        $nivel = new Nivel();
+        $nivel->nivel = 'Primaria';
+        $nivel->save();
+
+        $nivel = new Nivel();
+        $nivel->nivel = 'Secundaria';
+        $nivel->save();
+
+        $aula = new Aula;
+        $aula->codigo = 'PREKINDER';
+        $aula->aula = 'Pre-Kinder';
+        $aula->id_nivel = '1';
+        $aula->abreviatura = 'Pre-Kinder';
+
+        $aula->save();
+
+        $aula = new Aula;
+        $aula->codigo = 'KINDER';
+        $aula->aula = 'Kinder';
+        $aula->id_nivel = '1';
+        $aula->abreviatura = 'Kinder';
+
+        $aula->save();
+
 
         $aula = new Aula;
         $aula->codigo = '01PRIM';
-        $aula->grado = 'primer grado';
-        $aula->nivel = 'primaria';
-        $aula->abreviatura = '1°';
+        $aula->aula = 'Primer Grado de Primaria';
+        $aula->id_nivel = '2';
+        $aula->abreviatura = '1° Primaria';
 
         $aula->save();
 
         $aula = new Aula;
         $aula->codigo = '02PRIM';
-        $aula->grado = 'segundo grado';
-        $aula->nivel = 'primaria';
-        $aula->abreviatura = '2°';
+        $aula->aula = 'Segundo Grado de Primaria';
+        $aula->id_nivel = '2';
+        $aula->abreviatura = '2° Primaria';
 
         $aula->save();
 
         $aula = new Aula;
         $aula->codigo = '03PRIM';
-        $aula->grado = 'tercer grado';
-        $aula->nivel = 'primaria';
-        $aula->abreviatura = '3°';
+        $aula->aula = 'Tercer Grado de Primaria';
+        $aula->id_nivel = '2';
+        $aula->abreviatura = '3° Primaria';
 
         $aula->save();
 
         $aula = new Aula;
         $aula->codigo = '04PRIM';
-        $aula->grado = 'cuarto grado';
-        $aula->nivel = 'primaria';
-        $aula->abreviatura = '4°';
+        $aula->aula = 'Cuarto Grado de Primaria';
+        $aula->id_nivel = '2';
+        $aula->abreviatura = '4° Primaria';
 
         $aula->save();
         $aula = new Aula;
         $aula->codigo = '05PRIM';
-        $aula->grado = 'quinto grado';
-        $aula->nivel = 'primaria';
-        $aula->abreviatura = '5°';
+        $aula->aula = 'Quinto Grado de Primaria';
+        $aula->id_nivel = '2';
+        $aula->abreviatura = '5° Primaria';
 
         $aula->save();
 
         $aula = new Aula;
         $aula->codigo = '06PRIM';
-        $aula->grado = 'sexto grado';
-        $aula->nivel = 'primaria';
-        $aula->abreviatura = '6°';
+        $aula->aula = 'Sexto Grado de Primaria';
+        $aula->id_nivel = '2';
+        $aula->abreviatura = '6° Primaria';
 
         $aula->save();
         $aula = new Aula;
-        $aula->codigo = '01SEC';
-        $aula->grado = 'primer año';
-        $aula->nivel = 'secundaria';
-        $aula->abreviatura = '1°';
-
-        $aula->save();
-
-        $aula = new Aula;
-        $aula->codigo = '02SEC';
-        $aula->grado = 'segundo año';
-        $aula->nivel = 'secundaria';
-        $aula->abreviatura = '2°';
+        $aula->codigo = 'BASICO';
+        $aula->aula = 'Básico';
+        $aula->id_nivel = '3';
+        $aula->abreviatura = 'Básico';
 
         $aula->save();
 
         $aula = new Aula;
-        $aula->codigo = '03SEC';
-        $aula->grado = 'tercer año';
-        $aula->nivel = 'secundaria';
-        $aula->abreviatura = '3°';
+        $aula->codigo = 'INTERMEDIO';
+        $aula->aula = 'Intermedio';
+        $aula->id_nivel = '3';
+        $aula->abreviatura = 'Intermedio';
 
         $aula->save();
 
         $aula = new Aula;
-        $aula->codigo = '04SEC';
-        $aula->grado = 'cuarto año';
-        $aula->nivel = 'secundaria';
-        $aula->abreviatura = '4°';
+        $aula->codigo = 'PRE';
+        $aula->aula = 'Pre';
+        $aula->id_nivel = '3';
+        $aula->abreviatura = 'Pre';
 
         $aula->save();
 
-        $aula = new Aula;
-        $aula->codigo = '05SEC';
-        $aula->grado = 'quinto año';
-        $aula->nivel = 'secundaria';
-        $aula->abreviatura = '5°';
-
-        $aula->save();
-
+       
         $alumno = new Alumno;
-        $alumno->dni = '12345678';
-        $alumno->primer_nombre = 'Andres';
-        $alumno->segundo_nombre = 'Rafael';
-        $alumno->apellido_paterno = 'Martinez';
-        $alumno->apellido_materno = 'Cerron';
-        $alumno->id_aula = '6';
-        $alumno->telefono = '993689145';
-        $alumno->email = 'joseperu2503@gmail.com';
+        $alumno->dni = '73917269';
+        $alumno->primer_nombre = 'Rousvel';
+        $alumno->segundo_nombre = 'Roldan';
+        $alumno->apellido_paterno = 'Flores';
+        $alumno->apellido_materno = 'Roldan';
+        $alumno->fecha_nacimiento = Carbon::parse('20-11-2009');
+        $alumno->departamento = 'Lima';
+        $alumno->provincia = 'Lima';
+        $alumno->distrito = 'Puente Piedra';
+        $alumno->religion = 'Cristiana';
+        $alumno->discapacidad = 'No';
+        $alumno->id_grado = '9';
+        $alumno->id_aula = '8';
+        $alumno->telefono = '956770895';
+        $alumno->email = 'rousvelr20@gmail.com';
         $alumno->direccion = 'al costado de la panaderia';
         $alumno->foto_perfil = '/storage/fotos_perfil/estudiante.png';
-        $alumno->genero = 'masculino';
-        $alumno->password = 'rama';
-        $alumno->save();
-
-        $alumno = new Alumno;
-        $alumno->dni = '58274881';
-        $alumno->primer_nombre = 'Juan';
-        $alumno->segundo_nombre = 'Piero';
-        $alumno->apellido_paterno = 'Martinez';
-        $alumno->apellido_materno = 'Medina';
-        $alumno->id_aula = '6';
-        $alumno->telefono = '993689145';
-        $alumno->email = 'joseperu2503@gmail.com';
-        $alumno->direccion = 'al costado de la panaderia';
-        $alumno->foto_perfil = 'estudiante.png';
-        $alumno->genero = 'masculino';
-        $alumno->password = 'mame';
-        $alumno->save();
-
-        $alumno = new Alumno;
-        $alumno->dni = '78945623';
-        $alumno->primer_nombre = 'Raul';
-        $alumno->segundo_nombre = 'Marti';
-        $alumno->apellido_paterno = 'Perez';
-        $alumno->apellido_materno = 'Ramirez';
-        $alumno->id_aula = '6';
-        $alumno->telefono = '993689145';
-        $alumno->email = 'joseperu2503@gmail.com';
-        $alumno->direccion = 'al costado de la panaderia';
-        $alumno->foto_perfil = 'estudiante.png';
-        $alumno->genero = 'masculino';
-        $alumno->password = 'pera';
+        $alumno->id_genero = '1';
+        $alumno->password = 'hola';
+        $alumno->nombre_padre = 'JOSE MANUEL FLORES DELGADO';
+        $alumno->dni_padre = '06892202';
+        $alumno->telefono_padre = '969300081';
+        $alumno->nombre_madre = 'Gladys Veronica Roldan Obregón ';
+        $alumno->dni_madre = '33254044';
+        $alumno->telefono_madre = '956770895';
+        $alumno->nombre_apoderado = 'Gladys Veronica Roldan Obregón ';
+        $alumno->dni_apoderado = '33254044';
+        $alumno->telefono_apoderado = '33254044';
         $alumno->save();
 
         $user = new User;
-        $user->dni = '12345678';
-        $user->password = 'rama';
+        $user->dni = '73917269';
+        $user->password = 'hola';
         $user->role = 'alumno';
         $user->save();
 
-        $user = new User;
-        $user->dni = '58274881';
-        $user->password = 'mame';
-        $user->role = 'alumno';
-        $user->save();
-
-        $user = new User;
-        $user->dni = '78945623';
-        $user->password = 'pera';
-        $user->role = 'alumno';
-        $user->save();
 
         $profesor = new Profesor;
         $profesor->dni = '45978632';

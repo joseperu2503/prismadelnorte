@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 
-    <h1 class="titulo">{{$curso->nombre}}</h1>
+    <h1 class="titulo text-capitalize">{{$curso->nombre}}</h1>
 
     <div class="accordion" id="accordionPanelsStayOpenExample">
         @foreach ($bimestres as $bimestre)

@@ -3,6 +3,7 @@
 <html lang="es" dir="ltr">
   <head>
     <meta charset="UTF-8">
+    <title>@yield('title')</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
     <link rel="stylesheet" href="{{asset('css/sidebar.css')}}">

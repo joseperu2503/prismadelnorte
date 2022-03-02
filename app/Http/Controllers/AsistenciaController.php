@@ -47,7 +47,7 @@ class AsistenciaController extends Controller
         
         $asistencias = Asistencia::select('asistencias.*',
         'alumnos.apellido_paterno','alumnos.apellido_materno',
-        'alumnos.primer_nombre','alumnos.segundo_nombre','aulas.grado','aulas.nivel')
+        'alumnos.primer_nombre','alumnos.segundo_nombre','aulas.aula')
         ->join('alumnos', 'alumnos.dni', '=', 'asistencias.dni')
         ->leftjoin('aulas', 'aulas.id', '=', 'alumnos.id_aula')
         ->orderBy('created_at', 'desc')

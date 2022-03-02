@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Aula extends Model
+class Nivel extends Model
 {
     use HasFactory;
-    protected $table = 'aulas';
+    protected $table = 'nivels';
     protected $fillable = [
-        'codigo',
-        'aula',
-        'id_nivel',
-        'abreviatura'
+        'nivel',
     ];
 }

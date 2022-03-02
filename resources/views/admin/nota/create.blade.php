@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 
-    <h1 class="titulo">{{mb_convert_case($curso->nombre, MB_CASE_TITLE, "UTF-8")." - ".ucwords($aula->grado)." de ".ucwords($aula->nivel)}}</h1>
+    <h1 class="titulo">{{mb_convert_case($curso->nombre, MB_CASE_TITLE, "UTF-8")." - ".$aula->aula}}</h1>
     
     <div class="agregar-notas-container">
         <h2 class="agregar-notas">Agregar Notas</h2>
@@ -55,7 +55,7 @@
                 <tbody>
                     @foreach ($alumnos as $alumno)
                         <tr>
-                            <td class="align-middle"><img class = "foto" src="/storage/fotos_perfil/{{$alumno->foto_perfil}}" alt=""></td>
+                            <td class="align-middle"><img class = "foto" src="{{$alumno->foto_perfil}}" alt=""></td>
                             <td class="align-middle">{{ucwords($alumno->apellido_paterno." ".$alumno->apellido_materno." ".$alumno->primer_nombre." ".$alumno->segundo_nombre)}}</td>
                             <td class="align-middle"><input type="number" class="form-control mb-3" name="nota_{{$alumno->id}}" required value="{{old('nota_'.$alumno->id)}}"></td>
                         </tr>

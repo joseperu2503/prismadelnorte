@@ -66,8 +66,7 @@
             <!--<img src="image/profile.jpg" alt="profileImg">-->
           </div>
           <div class="name-job">
-            <div class="profile_name">Prem Shahi</div>
-            <div class="job">Web Desginer</div>
+            <div class="profile_name">Cerrar Sesión</div>
           </div>
           <a href="{{route('login.destroy')}}">
             <i class='bx bx-log-out' ></i>

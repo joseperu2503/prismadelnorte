@@ -33,7 +33,7 @@
                 <td class="align-middle">{{ucwords($asistencia->apellido_materno)}}</td>
                 <td class="align-middle">{{ucwords($asistencia->primer_nombre)}}</td>
                 <td class="align-middle">{{ucwords($asistencia->segundo_nombre)}}</td>
-                <td class="align-middle">{{ucwords($asistencia->grado)}} de {{ucwords($asistencia->nivel)}}</td>
+                <td class="align-middle">{{$asistencia->aula}}</td>
                 <td class="align-middle">{{$asistencia->created_at->format('d/m/Y')}}</td>
                 <td class="align-middle">{{$asistencia->created_at->format('H:i:s')}}</td>
                 <td class="align-middle">

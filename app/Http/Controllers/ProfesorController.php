@@ -185,7 +185,7 @@ class ProfesorController extends Controller
     {
         $dni = auth()->user()->dni;
         $profesor = DB::table('profesors')->where('dni', $dni)->first();       
-        $cursos = Curso::select('cursos.*','profesors.primer_nombre','profesors.apellido_paterno','aulas.grado','aulas.nivel')
+        $cursos = Curso::select('cursos.*','profesors.primer_nombre','profesors.apellido_paterno','aulas.aula')
             ->leftjoin('aulas', 'cursos.id_aula', '=', 'aulas.id')
             ->leftjoin('profesors', 'cursos.id_profesor', '=', 'profesors.id')
             ->where('id_profesor', $profesor->id)

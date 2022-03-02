@@ -22,8 +22,8 @@
                 @foreach ($cursos as $curso)
                     <tr>
                         <td class="align-middle">{{$curso->codigo}}</td>
-                        <td class="align-middle">{{mb_convert_case($curso->nombre, MB_CASE_TITLE, "UTF-8")}}</td>
-                        <td class="align-middle">{{ucwords($curso->grado)}} de {{ucwords($curso->nivel)}}</td>
+                        <td class="align-middle">{{$curso->nombre}}</td>
+                        <td class="align-middle">{{$curso->aula}}</td>
                         <td><a href="/curso/{{$curso->id}}" class="btn btn-success">Entrar</a></td>
                     </tr>      
                 @endforeach        

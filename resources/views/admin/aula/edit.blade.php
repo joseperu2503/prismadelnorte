@@ -10,14 +10,25 @@
         <form action="/aulas/{{$aula->id}}" method="POST">
             @csrf
             @method('PUT')
-            <label class="form-label">Código</label>
-            <input id="codigo" name="codigo" type="text" class="form-control mb-3" value="{{$aula->codigo}}">
-            <label class="form-label">Grado</label>
-            <input id="grado" name="grado" type="text" class="form-control mb-3" value="{{$aula->grado}}">
-            <label class="form-label">Nivel</label>
-            <input id="nivel" name="nivel" type="text" class="form-control mb-3" value="{{$aula->nivel}}">
-            <label class="form-label">Abreviatura</label>
-            <input id="abreviatura" name="abreviatura" type="text" class="form-control mb-3" value="{{$aula->abreviatura}}">           
+            <label class="form-label">Código*</label>
+            <input id="codigo" name="codigo" type="text" class="form-control" value="{{$aula->codigo}}" required>
+            <div id="emailHelp" class="form-text mb-3">Usar solo mayusculas y números.</div>
+            <label class="form-label">Nombre*</label>
+            <input id="aula" name="aula" type="text" class="form-control" value="{{$aula->aula}}" required>
+            <div id="emailHelp" class="form-text mb-3">Usar mayusculas y minusculas.</div>
+            <label class="form-label">Nivel*</label>
+            <select id="id_nivel" name="id_nivel" class="form-select mb-3" required>
+                <option selected disabled value="">Seleccione una opción</option>
+                @foreach ($niveles as $nivel)
+                    @if ($aula->id_nivel == $nivel->id)
+                        <option selected value="{{$nivel->id}}">{{$nivel->nivel}}</option>
+                    @else
+                        <option value="{{$nivel->id}}">{{$nivel->nivel}}</option>
+                    @endif       
+                @endforeach                                     
+            </select>
+            <label class="form-label">Abreviatura*</label>
+            <input id="abreviatura" name="abreviatura" type="text" class="form-control mb-3" value="{{$aula->abreviatura}}" required>           
             @if($errors->any())
                 <div class="alert alert-danger" role="alert">
                     @foreach ($errors->all() as $error)

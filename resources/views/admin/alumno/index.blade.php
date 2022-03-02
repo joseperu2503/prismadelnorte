@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1 class="titulo">Alumnos de {{ucwords($aula->grado)}} de {{ucwords($aula->nivel)}}</h1>
+    <h1 class="titulo">Alumnos de {{$aula->aula}} </h1>
     <a href="/alumnos/{{$aula->id}}/create" class="btn btn-success mb-4">Nuevo</a>
 
 
@@ -60,4 +60,5 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-html5-2.2.2/b-print-2.2.2/datatables.min.js"></script>
     <script src="{{asset('js/datatable.js')}}"></script>
     <script src="{{asset('js/sweetAlert.js')}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

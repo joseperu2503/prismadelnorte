@@ -528,25 +528,11 @@ a{
 
 /* Perfil*/
 
-.perfil-fondo {
-    background-color: #F0F1F3;
-    width: 90%;
-    max-width: 900px;
-    margin: 0 auto;
-    border-radius: 20px;
-    padding: 30px 0;
-}
-
-.perfil-container{
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
-}
 
 .perfil-encabezado {
-    margin: 0 auto 50px;
+    margin: 0 auto 2rem;
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: max-content max-content;
     justify-content: center;
     align-items: center;
     position: relative;    
@@ -567,7 +553,7 @@ a{
     position: absolute;
     font-size: 30px;
     top: 150px;
-    left: calc(15%);
+    left: calc(25%);
     display: grid;
     align-items: center;
     justify-content: center;
@@ -587,25 +573,8 @@ a{
     margin-left: 40px;
 }
 
-.nombre-usuario {
-    display: grid;
-    grid-template-columns: 1fr;
-
-}
-
-.perfil-encabezado-nombre h2{  
-    font-style: normal;
-    font-weight: bold;
-    font-size: 40px;
-    line-height: 45px;
-    /* identical to box height */
-    color: #575C63;
-    margin: 0;
-}
-
 
 .perfil-encabezado-nombre p{
-    margin-top:10px ;
     font-style: normal;
     font-weight: medium;
     font-size: 20px;
@@ -614,61 +583,17 @@ a{
     color: #575C63;
 }
 
-.perfil-grid {
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 4px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-}
-
-.perfil-grid div {
-    background-color: white;
-    padding: 10px 15px 10px 15px;
-}
-
-.perfil-grid-left{
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    color: #575C63;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.perfil-grid-right {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    color: #575C63;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.perfil-grid-encabezado {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-
-    color: #575C63;
-
-    margin: 15px 0 15px 15px;
-}
 
 @media screen and (max-width: 992px){
     .perfil-encabezado {
-        margin: 0 auto 50px;
+        margin: 0;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
         justify-items: center;
         align-items: center;
         position: relative;   
-        gap: 40px; 
+        gap: 1rem; 
     }
 
 
@@ -691,9 +616,7 @@ a{
         justify-content: center;
         color: #575c63;
     }
-    .perfil-grid div {
-        padding: 10px 10px 10px 10px;
-    }
+
 }
 
 /* Cursos */
@@ -1061,3 +984,4 @@ a{
     visibility: hidden;
     content: none;
 }
+/* -------------------------- */

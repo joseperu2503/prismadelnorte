@@ -7,6 +7,8 @@ use App\Models\Aula;
 use App\Models\Alumno;
 use App\Models\Asistencia;
 use App\Models\Bimestre;
+use App\Models\Genero;
+use App\Models\Grado;
 use App\Models\Nota;
 use App\Models\Post;
 use App\Models\Profesor;
@@ -36,7 +38,9 @@ class AlumnoController extends Controller
     public function create($id)
     {   
         $aula = Aula::find($id);
-        return view('admin.alumno.create')->with('aula',$aula);
+        $grados = Grado::all();
+        $generos = Genero::all();
+        return view('admin.alumno.create')->with('aula',$aula)->with('grados',$grados)->with('generos',$generos);
     }
 
     /**
@@ -49,15 +53,15 @@ class AlumnoController extends Controller
     {
         $request->validate([
             'dni' => 'required|numeric|digits:8',
+            'dni_padre' => 'numeric|digits:8',
+            'dni_madre' => 'numeric|digits:8',
+            'dni_apoderado' => 'numeric|digits:8',
             'primer_nombre' => 'required',
-            'segundo_nombre' => 'required',
             'apellido_paterno' => 'required',
             'apellido_materno' => 'required',
             'id_aula' => 'required',
-            'telefono' => 'required',
-            'email' => 'required',
-            'direccion' => 'required',
-            'genero' => 'required',
+            'id_grado' => 'required',
+            'id_genero' => 'required',
             'password' => 'required'
         ]);
 
@@ -96,7 +100,9 @@ class AlumnoController extends Controller
     {
         $alumno = Alumno::find($id);
         $aulas = Aula::all();
-        return view('admin.alumno.edit')->with('alumno',$alumno)->with('aulas',$aulas);      
+        $grados = Grado::all();
+        $generos = Genero::all();
+        return view('admin.alumno.edit')->with('alumno',$alumno)->with('aulas',$aulas)->with('grados',$grados)->with('generos',$generos);      
     }
 
     /**
@@ -110,15 +116,15 @@ class AlumnoController extends Controller
     {   
         $request->validate([
             'dni' => 'required|numeric|digits:8',
+            'dni_padre' => 'numeric|digits:8',
+            'dni_madre' => 'numeric|digits:8',
+            'dni_apoderado' => 'numeric|digits:8',
             'primer_nombre' => 'required',
-            'segundo_nombre' => 'required',
             'apellido_paterno' => 'required',
             'apellido_materno' => 'required',
             'id_aula' => 'required',
-            'telefono' => 'required',
-            'email' => 'required',
-            'direccion' => 'required',
-            'genero' => 'required',
+            'id_grado' => 'required',
+            'id_genero' => 'required'
         ]);
         
         $alumno = Alumno::find($id);
@@ -195,35 +201,16 @@ class AlumnoController extends Controller
         ]);
         $alumno = Alumno::find($id);
         if($imagen = $request->file('foto_perfil')) {         
-            $nombre_img = date('YmdHis'). "." . $request->file('imagen')->getClientOriginalExtension();
-            $imagen = $request->file('imagen')->storeAs('fotos_perfil',$nombre_img,'public');
+            $nombre_img = date('YmdHis'). "." . $request->file('foto_perfil')->getClientOriginalExtension();
+            $imagen = $request->file('foto_perfil')->storeAs('fotos_perfil',$nombre_img,'public');
             $datos['foto_perfil'] = Storage::url($imagen);
             if($alumno->foto_perfil != '/storage/fotos_perfil/estudiante.png'){
                 Storage::delete(str_replace("storage", "public", $alumno->foto_perfil)); 
             }
+            $alumno->update($datos);         
         }
-            
-        $alumno->update($datos);
         return redirect()->route('alumno.usuario.perfil');
-
-        // $dni = auth()->user()->dni;
-        // $alumno = DB::table('alumnos')->where('dni', $dni)->first();
-        // $id_aula = $alumno->id_aula;
-        // $aula = DB::table('aulas')->where('id', $id_aula)->first();
-
-        // if($imagen = $request->file('foto_perfil')){
-        
-        //     $rutaGuardarImg = 'storage/fotos_perfil/';
-        //     $imagenAlumno = $imagen->getClientOriginalName(); 
-        //     $imagen->move($rutaGuardarImg, $imagenAlumno);
-        //     $alum = Alumno::find($id);
-        //     $alum->foto_perfil = $imagenAlumno ;
-        //     $alum->save();
-        
-        //     return redirect()->route('alumno.usuario.perfil');
-        // }else{
-        //     return redirect()->route('alumno.usuario.perfil');
-        // }           
+                  
     }
 
     public function cursos_usuario()

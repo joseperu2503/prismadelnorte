@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <h1 class="titulo">{{mb_convert_case($curso->nombre, MB_CASE_TITLE, "UTF-8")." - ".ucwords($aula->grado)." de ".ucwords($aula->nivel)}}</h1>
+    <h1 class="titulo">{{$curso->nombre." - ".$aula->aula}}</h1>
     <a href="/curso/{{$curso->id}}/agregar_notas" class="btn btn-success">Agregar Notas</a>
     
     @foreach ($bimestres as $bimestre)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aula;
+use App\Models\Nivel;
 
 class AulaController extends Controller
 {
@@ -25,7 +26,8 @@ class AulaController extends Controller
      */
     public function create()
     {   
-        return view('admin.aula.create');
+        $niveles = Nivel::all();
+        return view('admin.aula.create')->with('niveles',$niveles);
     }
 
     /**
@@ -38,11 +40,11 @@ class AulaController extends Controller
     {
         $request->validate([
             'codigo' => 'required',
-            'grado' => 'required',
-            'nivel' => 'required',
+            'aula' => 'required',
+            'id_nivel' => 'required',
             'abreviatura' => 'required',
         ]);
-
+        
         $aula = $request->all();       
         Aula::create($aula);
         return redirect()->route('aulas.index');
@@ -68,7 +70,8 @@ class AulaController extends Controller
     public function edit($id)
     {
         $aula = Aula::find($id);
-        return view('admin.aula.edit')->with('aula',$aula);
+        $niveles = Nivel::all();
+        return view('admin.aula.edit')->with('aula',$aula)->with('niveles',$niveles);
     }
 
     /**
@@ -82,11 +85,11 @@ class AulaController extends Controller
     {
         $request->validate([
             'codigo' => 'required',
-            'grado' => 'required',
-            'nivel' => 'required',
+            'aula' => 'required',
+            'id_nivel' => 'required',
             'abreviatura' => 'required',
         ]);
-
+        
         $aula_datos = $request->all();
         $aula->update($aula_datos);
         return redirect()->route('aulas.index');

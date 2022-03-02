@@ -40,7 +40,7 @@
                     
                     <div class="card-body">
                         <h3 class="card-title mb-3">{{$post->titulo}}</h3>
-                        <p class="card-text">{{$post->descripcion}}</p>
+                        {!! $post->descripcion !!}
                         <div class="d-flex justify-item-center gap-3 mt-5">
                             <div>
                                 <img src="/storage/fotos_perfil/{{$post->autor_imagen}}" style="width:40px;height: 40px;object-fit: cover">

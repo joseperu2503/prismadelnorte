@@ -16,7 +16,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Código</th>
-                    <th scope="col">Grado y Nivel</th>		
+                    <th scope="col">Nombre</th>		
                     <th scope="col">Acciones</th>
                 </tr>          
             </thead>
@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{$aula->id}}</td>
                         <td>{{$aula->codigo}}</td>
-                        <td>{{ucwords($aula->grado)}} de {{ucwords($aula->nivel)}}</td>								
+                        <td>{{ucwords($aula->aula)}}</td>								
                         <td>                           
                             <form action="{{route('aulas.destroy',$aula->id)}}" method="POST" class="botones formEliminar"> 
                                 <a href="/alumnos/{{$aula->id}}" class="btn btn-success">Entrar</a>
@@ -50,4 +50,5 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-html5-2.2.2/b-print-2.2.2/datatables.min.js"></script>
     <script src="{{asset('js/datatable.js')}}"></script>
     <script src="{{asset('js/sweetAlert.js')}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

@@ -10,24 +10,26 @@
         <form action="/cursos/{{$curso->id}}" method="POST">
             @csrf
             @method('PUT')
-            <label class="form-label">Código</label>
-            <input id="codigo" name="codigo" type="text" class="form-control mb-3" value="{{$curso->codigo}}">
-            <label class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control mb-3" value="{{$curso->nombre}}">
-            <label class="form-label">Aula</label>
+            <label class="form-label">Código*</label>
+            <input id="codigo" name="codigo" type="text" class="form-control" value="{{$curso->codigo}}">
+            <div id="emailHelp" class="form-text mb-3">Usar solo mayusculas y números.</div>
+            <label class="form-label">Nombre*</label>
+            <input id="nombre" name="nombre" type="text" class="form-control" value="{{$curso->nombre}}">
+            <div id="emailHelp" class="form-text mb-3">Usar mayusculas y minusculas.</div>
+            <label class="form-label">Aula*</label>
 
             <select name="id_aula" class="form-select mb-3" required>
                 <option selected disabled value="">Seleccione una opción</option>
                 @foreach ($aulas as $aula)                       
                     @if ($curso->id_aula == $aula->id)
-                        <option selected value="{{$aula->id}}">{{$aula->grado}} de {{$aula->nivel}}</option>
+                        <option selected value="{{$aula->id}}">{{$aula->aula}}</option>
                     @else
-                        <option value="{{$aula->id}}">{{$aula->grado}} de {{$aula->nivel}}</option>
+                        <option value="{{$aula->id}}">{{$aula->aula}}</option>
                     @endif                      
                 @endforeach                                     
             </select>
 
-            <label class="form-label">Profesor</label>
+            <label class="form-label">Profesor*</label>
 
             <select name="id_profesor" class="form-select mb-3" required>
                 <option selected disabled value="">Seleccione una opción</option>
