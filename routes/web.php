@@ -159,4 +159,9 @@ Route::resource('trabajadores',TrabajadorController::class)
 //Posts
 
 Route::resource('publicaciones',PostController::class)
-    ->middleware('auth.admin');
+    ->middleware('auth.profesor');
+
+
+Route::get('/curso/{id}/crear_publicacion', [PostController::class,'create_profesor'])
+    ->middleware('auth.profesor') //admin y profesor
+    ->name('post.profesor.create');

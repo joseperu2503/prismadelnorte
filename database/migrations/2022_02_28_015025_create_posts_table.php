@@ -20,11 +20,11 @@ class CreatePostsTable extends Migration
             $table->string('imagen',100)->nullable();
             $table->text('iframe',100)->nullable();
             $table->text('descripcion',1000)->nullable();
-            $table->integer('ventana');
-            $table->integer('noticia');
+            $table->unsignedBigInteger('id_curso')->nullable();           
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_curso')->references('id')->on('cursos');
         });
     }
 

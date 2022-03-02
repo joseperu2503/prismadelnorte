@@ -256,34 +256,54 @@ class DatabaseSeeder extends Seeder
         $user->role = 'profesor';
         $user->save();
 
+        $profesor = new Profesor;
+        $profesor->dni = '45978635';
+        $profesor->primer_nombre = 'Andres';
+        $profesor->segundo_nombre = 'Javier';
+        $profesor->apellido_paterno = 'Perez';
+        $profesor->apellido_materno = 'Tarazona';
+        $profesor->telefono = '993689145';
+        $profesor->email = 'joseperu2503@gmail.com';
+        $profesor->direccion = 'al costado de la panaderia';
+        $profesor->genero = 'masculino';
+        $profesor->foto_perfil = 'man.png';
+        $profesor->password = 'mama';
+        $profesor->save();
+
+        $user = new User;
+        $user->dni = '45978635';
+        $user->password = 'mama';
+        $user->role = 'profesor';
+        $user->save();
+
         $curso = new Curso;
         $curso->codigo = 'ARIT06PRIM';
         $curso->nombre = 'aritmetica';
         $curso->id_profesor = '1';
-        $curso->id_aula = '6';
+        $curso->id_aula = '8';
         $curso->save();
 
         $curso = new Curso;
         $curso->codigo = 'ALGE06PRIM';
         $curso->nombre = 'algebra';
         $curso->id_profesor = '1';
-        $curso->id_aula = '6';
+        $curso->id_aula = '8';
         $curso->save();
 
 
         $curso = new Curso;
-        $curso->codigo = 'GEO06PRIM';
+        $curso->codigo = 'GEO05PRIM';
         $curso->nombre = 'geometria';
         $curso->id_profesor = '1';
-        $curso->id_aula = '6';
+        $curso->id_aula = '7';
         $curso->save();
 
 
         $curso = new Curso;
-        $curso->codigo = 'TRIGO06PRIM';
+        $curso->codigo = 'TRIGO05PRIM';
         $curso->nombre = 'trigonometria';
         $curso->id_profesor = '1';
-        $curso->id_aula = '6';
+        $curso->id_aula = '7';
         $curso->save();
 
         $bimestre = new Bimestre;

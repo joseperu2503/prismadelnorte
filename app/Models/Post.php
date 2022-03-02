@@ -15,7 +15,6 @@ class Post extends Model
         'imagen',
         'iframe',
         'descripcion',
-        'ventana',
-        'noticia'
+        'id_curso'
     ];
 }

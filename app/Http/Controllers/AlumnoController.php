@@ -162,8 +162,14 @@ class AlumnoController extends Controller
     {
         $dni = auth()->user()->dni;
         $alumno = DB::table('alumnos')->where('dni', $dni)->first();
-        $posts = Post::select('posts.*','users.dni','users.role')
+        $posts = Post::select('posts.*','users.dni','users.role','cursos.id_aula')
         ->leftjoin('users', 'posts.id_user', '=', 'users.id')
+        ->leftjoin('cursos', 'posts.id_curso', '=', 'cursos.id')
+        ->where('cursos.id_aula',$alumno->id_aula)
+        ->orWhere(function($q){
+            $q->where('users.role', 'admin')
+              ->whereNull('cursos.id_aula');
+        })
         ->orderby('created_at','desc')
         ->get();
         foreach($posts as $post){
@@ -178,7 +184,6 @@ class AlumnoController extends Controller
                 $post['autor']='Administración';
                 $post['autor_imagen']='logo.png';
             }
-
         }  
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         return view('admin.alumno.usuario.index')->with('alumno',$alumno)->with('posts',$posts)->with('meses',$meses);

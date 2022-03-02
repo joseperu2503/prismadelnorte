@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Curso;
 use App\Models\Aula;
 use App\Models\Nota;
+use App\Models\Post;
 use App\Models\Profesor;
 use Illuminate\Support\Facades\DB;
 
@@ -149,7 +150,6 @@ class CursoController extends Controller
         foreach($alumnos as $alumno){
             $notas_alumno = ["hola"=>"soy"];
             $prueba += [$alumno->id => $notas_alumno];
-           
         }
 
         $notas_tabla = [];
@@ -173,6 +173,26 @@ class CursoController extends Controller
             }
             $notas_tabla += [$bimestre->id => $notas_bimestre];           
         }
+
+        $posts = Post::select('posts.*','users.dni','users.role')
+        ->leftjoin('users', 'posts.id_user', '=', 'users.id')
+        ->where('id_curso',$id)
+        ->orderby('created_at','desc')
+        ->get();
+        foreach($posts as $post){
+            if($post->role=='profesor'){
+                $profesor2=Profesor::select('*')
+                    ->where('dni',$post->dni)
+                    ->first();
+                $post['autor']=$profesor2->primer_nombre." ".$profesor2->apellido_paterno;
+                $post['autor_imagen']=$profesor2->foto_perfil;
+            }
+            else if($post->role=='admin'){
+                $post['autor']='Administración';
+                $post['autor_imagen']='logo.png';
+            }
+        }  
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         
         return view('admin.curso.perfil.index')
             ->with('curso',$curso)
@@ -181,7 +201,9 @@ class CursoController extends Controller
             ->with('bimestres',$bimestres)
             ->with('alumnos',$alumnos)
             ->with('evaluaciones',$evaluaciones)
-            ->with('notas_tabla',$notas_tabla);
+            ->with('notas_tabla',$notas_tabla)
+            ->with('posts',$posts)
+            ->with('meses',$meses);
     }
 
 }

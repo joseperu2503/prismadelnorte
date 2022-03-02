@@ -1,4 +1,4 @@
-@extends('layouts.appAdmin')
+@extends((auth()->user()->role == 'profesor') ? 'layouts.appProfesor' : 'layouts.appAdmin')
 
 @section('title','Nueva Publicación')
 @section('css')
@@ -39,9 +39,12 @@
             <label class="form-label">Contenido embebido</label>
             <input id="iframe" name="iframe" type="text" class="form-control mb-3" value="{{old('iframe')}}">           
             
+            @if (isset($curso->id))
+                <input type="hidden" name="id_curso" value="{{$curso->id}}">
+            @endif
             <div class="buttons-form">
                 <a href="/publicaciones" class="btn btn-danger">Cancelar</a>
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="submit" class="btn btn-success">Publicar</button>
             </div>          
         </form>
     </div>
@@ -64,16 +67,19 @@
     </script>
     
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    
+      
     {{-- Summer editor --}}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script>
         $('#summernote').summernote({
-          placeholder: 'Hello Bootstrap 4',
-          tabsize: 2,
-          height: 100
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'fontname', 'fontsize','color']],
+                ['font', ['superscript', 'subscript']],
+                ['para', ['style','ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ]
         });
     </script>
     

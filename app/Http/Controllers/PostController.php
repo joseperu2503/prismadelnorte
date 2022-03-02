@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
 use App\Models\Post;
 use App\Models\Profesor;
 use Illuminate\Http\Request;
@@ -44,9 +45,18 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.post.create');
+    {   
+        return view('admin.post.create'); 
     }
+
+    public function create_profesor($id)
+    {   
+        $curso = Curso::find($id);
+        $profesor = Profesor::find($curso->id_profesor);
+        return view('admin.post.create')->with('curso',$curso)->with('profesor',$profesor);
+ 
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -62,23 +72,28 @@ class PostController extends Controller
         ]);
 
         $post=Post::create([
-            'id_user' => auth()->user()->id,
-            'ventana' => '1',
-            'noticia' => '1'
+            'id_user' => auth()->user()->id
         ]+$request->all());
 
-        if($request->file('imagen')) {
-            // $rutaGuardarImg = 'storage/imagenes_post/';
-            // $imagenPost = date('YmdHis'). "." . $imagen->getClientOriginalExtension();
-            // $imagen->move($rutaGuardarImg, $imagenPost);
-            // $post['imagen'] = "$imagenPost";       
+        if($request->file('imagen')) {  
             $nombre_img = date('YmdHis'). "." . $request->file('imagen')->getClientOriginalExtension();
             $imagen = $request->file('imagen')->storeAs('imagenes_post',$nombre_img,'public');
             $post->imagen = Storage::url($imagen);
             $post->save();
         }
-             
-        return redirect()->route('publicaciones.index');
+        
+        if(auth()->user()->role=='admin'){
+            if($request->id_curso){
+                return redirect()->route('curso.perfil',[$request->id_curso]);   
+            }else{
+                return redirect()->route('publicaciones.index');
+            }
+            
+        }
+        else if(auth()->user()->role=='profesor'){
+            return redirect()->route('curso.perfil',[$request->id_curso]);
+        }
+    
     }
 
     /**
@@ -125,7 +140,18 @@ class PostController extends Controller
             Storage::delete(str_replace("storage", "public", $post->imagen)); 
         }
         $post->update($datos);
-        return redirect()->route('publicaciones.index');
+
+
+        if(auth()->user()->role=='admin'){
+            if($post->id_curso){
+                return redirect()->route('curso.perfil',[$post->id_curso]);   
+            }else{
+                return redirect()->route('publicaciones.index');
+            }           
+        }
+        else if(auth()->user()->role=='profesor'){
+            return redirect()->route('curso.perfil',[$post->id_curso]);
+        }
     }
 
     /**

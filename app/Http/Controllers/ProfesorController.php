@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Profesor;
 use App\Models\User;
@@ -178,7 +179,34 @@ class ProfesorController extends Controller
     {
         $dni = auth()->user()->dni;
         $profesor = DB::table('profesors')->where('dni', $dni)->first();
-        return view('admin.profesor.perfil.index')->with('profesor',$profesor);
+        $posts = Post::select('posts.*','users.dni','users.role')
+        ->leftjoin('users', 'posts.id_user', '=', 'users.id')
+        ->where('users.dni',$dni)
+        ->orWhere(function($q){
+            $q->where('users.role', 'admin')
+            ->orWhere(function($q){
+                $q->where('users.role', 'admin')
+                  ->whereNull('cursos.id_aula',);
+            });
+        })
+        ->orderby('created_at','desc')
+        ->get();
+        foreach($posts as $post){
+            if($post->role=='profesor'){
+                $profesor=Profesor::select('*')
+                    ->where('dni',$post->dni)
+                    ->first();
+                $post['autor']=$profesor->primer_nombre." ".$profesor->apellido_paterno;
+                $post['autor_imagen']=$profesor->foto_perfil;
+            }
+            else if($post->role=='admin'){
+                $post['autor']='Administración';
+                $post['autor_imagen']='logo.png';
+            }
+        }  
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+        return view('admin.profesor.perfil.index')->with('profesor',$profesor)->with('posts',$posts)->with('meses',$meses);
     }
 
     public function cursos_usuario()
