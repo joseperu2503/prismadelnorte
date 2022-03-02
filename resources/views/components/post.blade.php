@@ -34,12 +34,12 @@
         {!! $post->descripcion !!}
         <div class="d-flex justify-item-center gap-3 mt-5">
             <div>
-                <img src="/storage/fotos_perfil/{{$post->autor_imagen}}" style="width:40px;height: 40px;object-fit: cover">
+                <img src="/storage/fotos_perfil/{{$post->autorimagen}}" style="width:40px;height: 40px;object-fit: cover">
             </div>
             
             <div>
                 <p class="fw-bold my-0">{{$post->autor}}</p>
-                <p class="card-text"><small class="text-muted">{{$post->created_at->format('d')}} de {{$meses[(int)$post->created_at->format('m')-1]}} a las {{$post->created_at->format('H:i')}}</small></p>
+                <p class="card-text"><small class="text-muted">{{$post->fechacreacion}}</small></p>
             </div>
         </div>                       
     </div>

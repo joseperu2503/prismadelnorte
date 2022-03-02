@@ -28,7 +28,7 @@
     
             <label class="form-label">Descripción</label>
             <textarea id="summernote" name="descripcion" type="text" class="form-control mb-3" rows="5">{{$post->descripcion}}</textarea>
-            <label class="form-label">Contenido embebido</label>
+            <label class="form-label mt-3">Contenido embebido</label>
             <input id="iframe" name="iframe" type="text" class="form-control mb-3" value="{{$post->iframe}}">           
             @if($errors->any())
                 <div class="alert alert-danger" role="alert">
@@ -66,9 +66,13 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script>
         $('#summernote').summernote({
-        placeholder: 'Hello Bootstrap 4',
-        tabsize: 2,
-        height: 100
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'fontname', 'fontsize','color']],
+                ['font', ['superscript', 'subscript']],
+                ['para', ['style','ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ]
         });
     </script>
 @endsection

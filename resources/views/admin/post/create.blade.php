@@ -36,7 +36,7 @@
     
             <label class="form-label">Descripción</label>
             <textarea id="summernote" name="descripcion" type="text" class="form-control mb-3" rows="5" >{{old('descripcion')}}</textarea>
-            <label class="form-label">Contenido embebido</label>
+            <label class="form-label mt-3">Contenido embebido</label>
             <input id="iframe" name="iframe" type="text" class="form-control mb-3" value="{{old('iframe')}}">           
             
             @if (isset($curso->id))

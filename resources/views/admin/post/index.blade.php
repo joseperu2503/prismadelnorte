@@ -12,7 +12,7 @@
         <div class="row">
 
             @foreach ($posts as $post)
-                <x-post :post="$post" :meses="$meses"/>
+                <x-post :post="$post"/>
             @endforeach
         </div>
         

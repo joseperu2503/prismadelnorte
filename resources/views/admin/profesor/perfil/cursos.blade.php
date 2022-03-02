@@ -23,7 +23,7 @@
                     <tr>
                         <td class="align-middle">{{$curso->codigo}}</td>
                         <td class="align-middle">{{$curso->nombre}}</td>
-                        <td class="align-middle">{{$curso->aula}}</td>
+                        <td class="align-middle">{{$curso->aula->aula}}</td>
                         <td><a href="/curso/{{$curso->id}}" class="btn btn-success">Entrar</a></td>
                     </tr>      
                 @endforeach        

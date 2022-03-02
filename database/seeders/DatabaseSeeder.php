@@ -245,7 +245,7 @@ class DatabaseSeeder extends Seeder
         $profesor->telefono = '993689145';
         $profesor->email = 'joseperu2503@gmail.com';
         $profesor->direccion = 'al costado de la panaderia';
-        $profesor->genero = 'masculino';
+        $profesor->id_genero = '1';
         $profesor->foto_perfil = 'man.png';
         $profesor->password = 'mama';
         $profesor->save();
@@ -258,14 +258,14 @@ class DatabaseSeeder extends Seeder
 
         $profesor = new Profesor;
         $profesor->dni = '45978635';
-        $profesor->primer_nombre = 'Andres';
-        $profesor->segundo_nombre = 'Javier';
-        $profesor->apellido_paterno = 'Perez';
+        $profesor->primer_nombre = 'Gabriela';
+        $profesor->segundo_nombre = 'Lucia';
+        $profesor->apellido_paterno = 'Ortega';
         $profesor->apellido_materno = 'Tarazona';
         $profesor->telefono = '993689145';
         $profesor->email = 'joseperu2503@gmail.com';
         $profesor->direccion = 'al costado de la panaderia';
-        $profesor->genero = 'masculino';
+        $profesor->id_genero = '2';
         $profesor->foto_perfil = 'man.png';
         $profesor->password = 'mama';
         $profesor->save();

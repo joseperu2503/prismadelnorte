@@ -18,11 +18,28 @@ class Profesor extends Model
         'telefono',
         'email',
         'direccion',
-        'genero',   
-        'password'    
+        'id_genero',   
+        'password',
+        'foto_perfil'   
     ];
 
     public function setPasswordAttribute($password){
         $this->attributes['password'] = bcrypt($password);
     }
+
+    public function cursos()
+    {
+        return $this->hasMany(Curso::class,'id_profesor');
+    }
+    
+    public function setCursosidAttribute()
+    {
+        $cursos = Curso::select('id')           
+            ->where('id_profesor', $this->id)
+            ->get();
+
+        return $cursos;
+    }
+
+
 }

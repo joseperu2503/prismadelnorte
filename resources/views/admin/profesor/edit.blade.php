@@ -27,7 +27,16 @@
             <label class="form-label">Dirección</label>
             <input id="direccion" name="direccion" type="text" class="form-control mb-3" value="{{$profesor->direccion}}">
             <label class="form-label">Genero</label>
-            <input id="genero" name="genero" type="text" class="form-control mb-3" value="{{$profesor->genero}}">
+            <select id="id_genero" name="id_genero" class="form-select mb-3" required>
+                <option selected disabled value="">Seleccione una opción</option>
+                @foreach ($generos as $genero)
+                    @if ($genero->id==$profesor->id_genero)
+                        <option selected value="{{$genero->id}}">{{$genero->genero}}</option>   
+                    @else
+                        <option value="{{$genero->id}}">{{$genero->genero}}</option>   
+                    @endif            
+                @endforeach                                     
+            </select>
             <label class="form-label">Contraseña</label>
             <input id="password" name="password" type="text" class="form-control mb-3">  
             @if($errors->any())

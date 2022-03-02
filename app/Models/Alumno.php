@@ -15,7 +15,7 @@ class Alumno extends Model
         'segundo_nombre',
         'apellido_paterno',
         'apellido_materno',
-        'fecha_nacimiento'=>'datetime:d/m/Y',
+        'fecha_nacimiento',
         'departamento',
         'provincia',
         'distrito',

@@ -30,8 +30,8 @@
                     <td class="align-middle">{{$curso->id}}</td>
                     <td class="align-middle">{{$curso->codigo}}</td>
                     <td class="align-middle">{{$curso->nombre}}</td>	
-                    <td class="align-middle">{{ucwords($curso->primer_nombre." ".$curso->apellido_paterno)}}</td>	
-                    <td class="align-middle">{{$curso->aula}}</td>								
+                    <td class="align-middle">{{ucwords($curso->profesor->primer_nombre." ".$curso->profesor->apellido_paterno)}}</td>	
+                    <td class="align-middle">{{$curso->aula->aula}}</td>								
                     <td class="align-middle">     
                         <form action="{{route('cursos.destroy',$curso->id)}}" method="POST" class="botones formEliminar"> 
                             <a href="/curso/{{$curso->id}}" class="btn btn-success">Entrar</a>

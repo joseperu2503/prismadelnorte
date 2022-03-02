@@ -14,7 +14,9 @@
 <div class="container">
     <div class="row">
         @foreach ($posts as $post)
-            <x-post :post="$post" :meses="$meses"/>
+            @if (($post->user->role == 'admin' &&  is_null($post->id_curso)) || @$post->curso->aula->id == $alumno->id_aula)
+                <x-post :post="$post"/>   
+            @endif         
         @endforeach
     </div>  
 </div>

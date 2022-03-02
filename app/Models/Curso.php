@@ -15,4 +15,12 @@ class Curso extends Model
         'id_aula',
         'id_profesor'
     ];
+
+    public function profesor(){
+        return $this->belongsTo(Profesor::class,'id_profesor');
+    }
+
+    public function aula(){
+        return $this->belongsTo(Aula::class,'id_aula');
+    }
 }

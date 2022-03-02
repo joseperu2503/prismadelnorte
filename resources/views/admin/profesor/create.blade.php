@@ -9,25 +9,30 @@
     <div class="form-container">  
         <form action="/profesores" method="POST">
             @csrf
-            <label class="form-label">DNI</label>
+            <label class="form-label">DNI*</label>
             <input id="dni" name="dni" type="number" class="form-control mb-3" value="{{old('dni')}}">
-            <label class="form-label">Apellido Paterno</label>
+            <label class="form-label">Apellido Paterno*</label>
             <input id="apellido_paterno" name="apellido_paterno" type="text" class="form-control mb-3" value="{{old('apellido_paterno')}}">
-            <label class="form-label">Apellido Materno</label>
+            <label class="form-label">Apellido Materno*</label>
             <input id="apellido_materno" name="apellido_materno" type="text" class="form-control mb-3" value="{{old('apellido_materno')}}">
-            <label class="form-label">Primer Nombre</label>
+            <label class="form-label">Primer Nombre*</label>
             <input id="primer_nombre" name="primer_nombre" type="text" class="form-control mb-3" value="{{old('primer_nombre')}}"> 
-            <label class="form-label">Segundo Nombre</label>
+            <label class="form-label">Segundo Nombre*</label>
             <input id="segundo_nombre" name="segundo_nombre" type="text" class="form-control mb-3" value="{{old('segundo_nombre')}}">          
-            <label class="form-label">Telefono</label>
+            <label class="form-label">Telefono*</label>
             <input id="telefono" name="telefono" type="number" class="form-control mb-3" value="{{old('telefono')}}">
-            <label class="form-label">Email</label>
+            <label class="form-label">Email*</label>
             <input id="email" name="email" type="text" class="form-control mb-3" value="{{old('email')}}">
-            <label class="form-label">Dirección</label>
+            <label class="form-label">Dirección*</label>
             <input id="direccion" name="direccion" type="text" class="form-control mb-3" value="{{old('direccion')}}">
-            <label class="form-label">Género</label>
-            <input id="genero" name="genero" type="text" class="form-control mb-3" value="{{old('genero')}}">
-            <label class="form-label">Contraseña</label>
+            <label class="form-label">Género*</label>       
+            <select id="id_genero" name="id_genero" class="form-select mb-3" required>
+                <option selected disabled value="">Seleccione una opción</option>
+                @foreach ($generos as $genero)
+                    <option value="{{$genero->id}}">{{$genero->genero}}</option>
+                @endforeach                                     
+            </select>
+            <label class="form-label">Contraseña*</label>
             <input id="password" name="password" type="text" class="form-control mb-3" value="{{old('password')}}">
             @if($errors->any())
                 <div class="alert alert-danger" role="alert">

@@ -37,7 +37,7 @@
                                 @if($evaluacion->id_bimestre == $bimestre->id)
                                     <td class="align-middle">
                                         <div class="justify-content-center row align-items-center">
-                                            {{$notas_tabla["$bimestre->id"]["$alumno->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]}}
+                                            {{isset($notas_tabla["$bimestre->id"]["$alumno->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"])}}
                                         </div>                          
                                     </td>
                                 @endif

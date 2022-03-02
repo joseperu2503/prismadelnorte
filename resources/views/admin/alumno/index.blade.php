@@ -27,8 +27,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($alumnos as $alumno)
-                    @if ($aula->id == $alumno->id_aula)
+                @foreach ($aula->alumnos as $alumno)
+
                         <tr>
                             <td class="align-middle">{{$alumno->id}}</td>
                             <td class="align-middle">{{$alumno->dni}}</td>
@@ -47,7 +47,7 @@
                                 </form>
                             </td>	
                         </tr>
-                    @endif                          
+                       
                 @endforeach        
             </tbody>
         </table>     

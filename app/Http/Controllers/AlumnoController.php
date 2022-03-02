@@ -25,9 +25,8 @@ class AlumnoController extends Controller
      */
     public function index($aula_id)
     {
-        $alumnos = Alumno::paginate();
         $aula = Aula::find($aula_id);
-        return view('admin.alumno.index')->with('aula',$aula)->with('alumnos',$alumnos);
+        return view('admin.alumno.index')->with('aula',$aula);
     }
 
     /**
@@ -53,9 +52,9 @@ class AlumnoController extends Controller
     {
         $request->validate([
             'dni' => 'required|numeric|digits:8',
-            'dni_padre' => 'numeric|digits:8',
-            'dni_madre' => 'numeric|digits:8',
-            'dni_apoderado' => 'numeric|digits:8',
+            'dni_padre' => 'nullable|numeric|digits:8',
+            'dni_madre' => 'nullable|numeric|digits:8',
+            'dni_apoderado' => 'nullable|numeric|digits:8',
             'primer_nombre' => 'required',
             'apellido_paterno' => 'required',
             'apellido_materno' => 'required',
@@ -160,33 +159,12 @@ class AlumnoController extends Controller
 
     public function index_usuario()
     {
-        $dni = auth()->user()->dni;
-        $alumno = DB::table('alumnos')->where('dni', $dni)->first();
-        $posts = Post::select('posts.*','users.dni','users.role','cursos.id_aula')
-        ->leftjoin('users', 'posts.id_user', '=', 'users.id')
-        ->leftjoin('cursos', 'posts.id_curso', '=', 'cursos.id')
-        ->where('cursos.id_aula',$alumno->id_aula)
-        ->orWhere(function($q){
-            $q->where('users.role', 'admin')
-              ->whereNull('cursos.id_aula');
-        })
+        $alumno = Alumno::where('dni', auth()->user()->dni)->first();
+        $posts = Post::select('*')
         ->orderby('created_at','desc')
         ->get();
-        foreach($posts as $post){
-            if($post->role=='profesor'){
-                $profesor=Profesor::select('*')
-                    ->where('dni',$post->dni)
-                    ->first();
-                $post['autor']=$profesor->primer_nombre." ".$profesor->apellido_paterno;
-                $post['autor_imagen']=$profesor->foto_perfil;
-            }
-            else if($post->role=='admin'){
-                $post['autor']='Administración';
-                $post['autor_imagen']='logo.png';
-            }
-        }  
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        return view('admin.alumno.usuario.index')->with('alumno',$alumno)->with('posts',$posts)->with('meses',$meses);
+        
+        return view('admin.alumno.usuario.index')->with('alumno',$alumno)->with('posts',$posts);
     }
 
     public function perfil_usuario()

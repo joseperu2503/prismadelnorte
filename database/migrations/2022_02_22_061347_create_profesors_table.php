@@ -23,10 +23,12 @@ class CreateProfesorsTable extends Migration
             $table->integer('telefono');
             $table->string('email',100);
             $table->string('direccion',100);
-            $table->string('genero',15);
+            $table->unsignedBigInteger('id_genero');
             $table->string('password');
             $table->string('foto_perfil',100);
             $table->timestamps();
+
+            $table->foreign('id_genero')->references('id')->on('generos');
         });
     }
 

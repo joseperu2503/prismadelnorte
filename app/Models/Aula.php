@@ -15,4 +15,9 @@ class Aula extends Model
         'id_nivel',
         'abreviatura'
     ];
+
+    public function alumnos()
+    {
+        return $this->hasMany(Alumno::class,'id_aula');
+    }
 }

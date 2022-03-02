@@ -17,26 +17,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::select('posts.*','users.dni','users.role')
-        ->leftjoin('users', 'posts.id_user', '=', 'users.id')
+        $posts = Post::select('*')
         ->orderby('created_at','desc')
         ->get();
-        foreach($posts as $post){
-            if($post->role=='profesor'){
-                $profesor=Profesor::select('*')
-                    ->where('dni',$post->dni)
-                    ->first();
-                $post['autor']=$profesor->primer_nombre." ".$profesor->apellido_paterno;
-                $post['autor_imagen']=$profesor->foto_perfil;
-            }
-            else if($post->role=='admin'){
-                $post['autor']='Administración';
-                $post['autor_imagen']='logo.png';
-            }
-
-        }  
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        return view('admin.post.index')->with('posts',$posts)->with('meses',$meses);
+    
+        return view('admin.post.index')->with('posts',$posts);
     }
 
     /**

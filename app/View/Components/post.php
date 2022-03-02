@@ -7,16 +7,14 @@ use Illuminate\View\Component;
 class post extends Component
 {
     public $post;
-    public $meses;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($post,$meses)
+    public function __construct($post)
     {
         $this->post = $post;
-        $this->meses = $meses;
     }
 
     /**

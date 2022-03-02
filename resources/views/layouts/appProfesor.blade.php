@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
-<html lang="es" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>@yield('title')</title>
-    <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
-    <link rel="stylesheet" href="{{asset('css/sidebar.css')}}">
-    <!-- Boxiocns CDN Link -->
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{asset('css/colores.css')}}">
-    <script src="https://kit.fontawesome.com/191a957bb7.js" crossorigin="anonymous"></script>
-    @yield('css')
-    <link rel="stylesheet" href="{{asset('css/tablas.css')}}">
-  </head>
-<body> 
+@extends('layouts.appHTML')
+
+@section('sidebar')   
   <header>
     <div class="home-content">
       <i class='bx bx-menu close'></i>
@@ -38,10 +24,10 @@
         @endif 
         >
           <i class='bx bx-grid-alt' ></i>
-          <span class="link_name">Dashboard</span>
+          <span class="link_name">Inicio</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Category</a></li>
+          <li><a class="link_name" href="#">Inicio</a></li>
         </ul>
       </li>
     
@@ -76,12 +62,4 @@
       </li>
     </ul>
   </div>
-  <section class="home-section">   
-    <main class="main">
-      @yield('content')
-    </main>
-  </section>
-  <script src="{{asset('js/sidebar.js')}}"></script>
-  @yield('js')
-</body>
-</html>
+@endsection

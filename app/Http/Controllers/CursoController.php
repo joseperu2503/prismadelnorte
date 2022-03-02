@@ -20,10 +20,7 @@ class CursoController extends Controller
      */
     public function index()
     {   
-        $cursos = Curso::select('cursos.*','profesors.primer_nombre','profesors.apellido_paterno','aulas.aula')
-            ->leftjoin('aulas', 'cursos.id_aula', '=', 'aulas.id')
-            ->leftjoin('profesors', 'cursos.id_profesor', '=', 'profesors.id')
-            ->get();
+        $cursos = Curso::all();
         return view('admin.curso.index')->with('cursos',$cursos);
     }
 
