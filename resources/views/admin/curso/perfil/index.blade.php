@@ -12,6 +12,7 @@
     <a href="/curso/{{$curso->id}}/agregar_notas" class="btn btn-success">Agregar Notas</a>
     
     @foreach ($bimestres as $bimestre)
+       
         <h2 class="titulo-2">{{$bimestre->bimestre}} Bimestre</h2>
         <div class="table-responsive">
             <table class = "table table-hover table-notas">
@@ -37,7 +38,7 @@
                                 @if($evaluacion->id_bimestre == $bimestre->id)
                                     <td class="align-middle">
                                         <div class="justify-content-center row align-items-center">
-                                            {{$notas_tabla['$bimestre->id']['$alumno->id']['$evaluacion->id_evaluacion']['$evaluacion->num_evaluacion']}}                    
+                                            {{$notas_tabla["$bimestre->id"]["$alumno->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]}}                    
                                         </div>                          
                                     </td>
                                 @endif
@@ -74,7 +75,7 @@
         </div>
     @endforeach
     
-    <h1 class="titulo">Publicaciones</h1>
+    <h1 class="titulo">Publicaciones del curso</h1>
     <a href="/curso/{{$curso->id}}/crear_publicacion" class="btn btn-success">Crear publicación</a>
     <div class="container">
         <div class="row">

@@ -62,11 +62,10 @@
                         <tr>
                             <td class="align-middle"><img class = "foto" src="{{$alumno->foto_perfil}}" alt=""></td>
                             <td class="align-middle">{{ucwords($alumno->apellido_paterno." ".$alumno->apellido_materno." ".$alumno->primer_nombre." ".$alumno->segundo_nombre)}}</td>
-                            @foreach ($notas as $nota)
-                                @if ($nota->id_alumno == $alumno->id)
-                                    <td class="align-middle"><input type="number" class="form-control mb-3" name="nota_{{$alumno->id}}" placeholder="Insertar" value="{{$nota->nota}}" required></td>
-                                @endif 
-                            @endforeach  
+
+                            <td class="align-middle"><input type="number" class="form-control mb-3" name="nota_{{$alumno->id}}" @if ($notas_tabla["$alumno->id"]=='nsp')
+                                placeholder="NSP"
+                            @else placeholder="Insertar" @endif  value="{{$notas_tabla["$alumno->id"]}}"></td>
                         </tr>
                     @endforeach
                 </tbody>

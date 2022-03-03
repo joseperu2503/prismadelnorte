@@ -18,7 +18,7 @@
             </h2>
             <div id="panelsStayOpen-collapse{{$bimestre->num_ingles}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{$bimestre->num_ingles}}">
                 <div class="accordion-body">
-                    @if ($notas->where('id_bimestre', $bimestre->id)->count()>0)
+                    @if ($notas_tabla["$bimestre->id"]!=null)
                         <div class="container-sm col-12 col-md-6">
                             <table class="table">
                                 <thead>
@@ -26,23 +26,25 @@
                                         <th>
                                             Evaluación
                                         </th>
-                                        <th>
+                                        <th class="justify-content-center row align-items-center">
                                             Nota
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($notas as $nota)
-                                        @if ($nota->id_bimestre == $bimestre->id)
+                                    @foreach ($evaluaciones as $evaluacion)
+                                        @if ($evaluacion->id_bimestre == $bimestre->id)
                                             <tr>
                                                 <td>
-                                                    {{$nota->evaluacion}} {{$nota->num_evaluacion}}
+                                                    {{$evaluacion->evaluacion}} {{$evaluacion->num_evaluacion}}
                                                 </td>
-                                                <td>
-                                                    @if ($nota->nota>10)
-                                                        <p class = "nota-aprobada">{{$nota->nota}}</p> 
-                                                    @else
-                                                        <p class = "nota-desaprobada">{{$nota->nota}}</p>   
+                                                <td class="justify-content-center row align-items-center">                                                   
+                                                    @if ($notas_tabla["$bimestre->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]=='NSP')
+                                                        <p class = "nota-nsp">{{$notas_tabla["$bimestre->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]}}</p>                            
+                                                    @elseif((int)$notas_tabla["$bimestre->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]<10)
+                                                        <p class = "nota-desaprobada">{{$notas_tabla["$bimestre->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]}}</p>                                            
+                                                    @elseif((int)$notas_tabla["$bimestre->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]>=10)
+                                                        <p class = "nota-aprobada">{{$notas_tabla["$bimestre->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"]}}</p>
                                                     @endif
                                                 </td>
                                             </tr>

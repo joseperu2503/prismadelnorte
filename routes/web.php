@@ -18,7 +18,8 @@ use App\Models\Trabajador;
 use Illuminate\Support\Facades\URL;
 
 Route::get('/', function () {
-    return view('home');
+    // return view('login.index');
+    return redirect()->route('login.index');
 })->middleware('auth');
 
 Route::get('/login', [SessionsController::class,'create'])
@@ -157,6 +158,9 @@ Route::resource('trabajadores',TrabajadorController::class)
     ->middleware('auth.admin');
 
 //Posts
+Route::get('inicio', [PostController::class,'index'])
+    ->middleware('auth.admin')
+    ->name('inicio.index');
 
 Route::resource('publicaciones',PostController::class)
     ->middleware('auth.profesor');

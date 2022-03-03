@@ -57,7 +57,7 @@
                         <tr>
                             <td class="align-middle"><img class = "foto" src="{{$alumno->foto_perfil}}" alt=""></td>
                             <td class="align-middle">{{ucwords($alumno->apellido_paterno." ".$alumno->apellido_materno." ".$alumno->primer_nombre." ".$alumno->segundo_nombre)}}</td>
-                            <td class="align-middle"><input type="number" class="form-control mb-3" name="nota_{{$alumno->id}}" required value="{{old('nota_'.$alumno->id)}}"></td>
+                            <td class="align-middle"><input type="number" class="form-control mb-3" name="nota_{{$alumno->id}}" value="{{old('nota_'.$alumno->id)}}"></td>
                         </tr>
                     @endforeach
                 </tbody>

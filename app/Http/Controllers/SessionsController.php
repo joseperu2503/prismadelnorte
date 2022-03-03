@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class SessionsController extends Controller
 {
@@ -18,12 +19,21 @@ class SessionsController extends Controller
             );
         }else{
             if(auth()->user()->role == 'admin'){
-                return redirect()->route('admin.index');
+                return redirect()->route('inicio.index');
             }
             else if(auth()->user()->role == 'alumno') {
-                return redirect()
+                $alumno = DB::table('alumnos')->where('dni', auth()->user()->dni)->first();
+
+                if($alumno->id_genero=='1'){
+                    return redirect()
                     ->route('alumno.usuario.index')
-                    ->with('message', 'mensaje al iniciar sesion');
+                    ->with('message', 'Bienvenido '.$alumno->primer_nombre.' '.$alumno->apellido_paterno);
+                }else if($alumno->id_genero=='2'){
+                    return redirect()
+                    ->route('alumno.usuario.index')
+                    ->with('message', 'Bienvenida '.$alumno->primer_nombre.' '.$alumno->apellido_paterno);
+                }
+               
             }
             else if(auth()->user()->role == 'profesor'){
                 return redirect()->route('profesor.usuario.index');

@@ -10,6 +10,7 @@ use App\Models\Evaluacion;
 use App\Models\Nota;
 use App\Models\Profesor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotaController extends Controller
 {
@@ -87,14 +88,17 @@ class NotaController extends Controller
                 ->get();
     
             foreach($alumnos as $alumno){
-                $nota = new Nota();
-                $nota->id_curso = $id;
-                $nota->id_bimestre = $request->get('id_bimestre');
-                $nota->id_evaluacion = $request->get('id_evaluacion');
-                $nota->num_evaluacion = $request->get('num_evaluacion');
-                $nota->id_alumno = $alumno->id;
-                $nota->nota = $request->get('nota_'.$alumno->id);            
-                $nota->save();
+
+                if($request->get('nota_'.$alumno->id) != null){
+                    $nota = new Nota();
+                    $nota->id_curso = $id;
+                    $nota->id_bimestre = $request->get('id_bimestre');
+                    $nota->id_evaluacion = $request->get('id_evaluacion');
+                    $nota->num_evaluacion = $request->get('num_evaluacion');
+                    $nota->id_alumno = $alumno->id;
+                    $nota->nota = $request->get('nota_'.$alumno->id);            
+                    $nota->save();
+                }              
             }
     
             return redirect()->route('curso.perfil',$id);
@@ -134,12 +138,6 @@ class NotaController extends Controller
             ->get();
         $evaluaciones = Evaluacion::select('*')                      
             ->get();
-        $notas = Nota::select('*')                    
-            ->where('id_evaluacion', $id_evaluacion)
-            ->where('num_evaluacion', $num_evaluacion)
-            ->where('id_curso', $id_curso)
-            ->where('id_bimestre', $id_bimestre)
-            ->get();
         $alumnos = Alumno::select('*')   
             ->where('id_aula', $aula->id)    
             ->orderBy('apellido_paterno', 'asc')               
@@ -150,13 +148,34 @@ class NotaController extends Controller
             ->where('id_curso', $id_curso)
             ->where('id_bimestre', $id_bimestre)
             ->first();
+
+            $notas_tabla = [];
+            foreach($alumnos as $alumno){
+                
+                $nota = DB::table('notas')                  
+                ->where('id_curso', $id_curso)
+                ->where('id_alumno', $alumno->id)
+                ->where('id_bimestre', $id_bimestre)
+                ->where('id_evaluacion', $id_evaluacion)
+                ->where('num_evaluacion', $num_evaluacion)
+                ->first();    
+                if(isset($nota)) {
+                    $nota2=$nota->nota;
+                }else{
+                    $nota2='nsp';
+                }
+      
+                $notas_tabla += [$alumno->id => $nota2];           
+            }
+
+        
         return view('admin.nota.edit')
             ->with('curso',$curso)
             ->with('aula',$aula)
             ->with('profesor',$profesor)
             ->with('bimestres',$bimestres)
             ->with('evaluaciones',$evaluaciones)
-            ->with('notas',$notas)
+            ->with('notas_tabla',$notas_tabla)
             ->with('alumnos',$alumnos)
             ->with('evaluacion_datos',$evaluacion_datos);
     }
@@ -179,7 +198,8 @@ class NotaController extends Controller
             ->count();
         if($count == 0 || ($request->get('id_evaluacion_antiguo')==$request->get('id_evaluacion') &&
                             $request->get('num_evaluacion_antiguo')== $request->get('num_evaluacion') &&
-                            $request->get('id_bimestre_antiguo')==$request->get('id_bimestre')) ){
+                            $request->get('id_bimestre_antiguo')==$request->get('id_bimestre')) )
+        {
             $curso = Curso::find($id);
             $aula = Aula::select('*')           
                 ->where('id', $curso->id_aula)
@@ -189,7 +209,7 @@ class NotaController extends Controller
                 ->get();
 
             foreach($alumnos as $alumno){
-
+                //Por cada alumno buscame su nota del respectivo curso,bimestre,evaluacion y numero de evaluacion
                 $nota = Nota::select('*')                    
                 ->where('id_evaluacion', $request->get('id_evaluacion_antiguo'))
                 ->where('num_evaluacion', $request->get('num_evaluacion_antiguo'))
@@ -198,13 +218,35 @@ class NotaController extends Controller
                 ->where('id_alumno', $alumno->id)
                 ->first();
 
-                $nota->id_curso = $id;
-                $nota->id_bimestre = $request->get('id_bimestre');
-                $nota->id_evaluacion = $request->get('id_evaluacion');
-                $nota->num_evaluacion = $request->get('num_evaluacion');
-                $nota->id_alumno = $alumno->id;
-                $nota->nota = $request->get('nota_'.$alumno->id);            
-                $nota->save();
+                //si existe la nota
+                if(isset($nota)){
+                    //si ha cambiado otro valor entero, actualizala
+                    if($request->get('nota_'.$alumno->id) != null){
+
+                        $nota->id_curso = $id;
+                        $nota->id_bimestre = $request->get('id_bimestre');
+                        $nota->id_evaluacion = $request->get('id_evaluacion');
+                        $nota->num_evaluacion = $request->get('num_evaluacion');
+                        $nota->id_alumno = $alumno->id;
+                        $nota->nota = $request->get('nota_'.$alumno->id);            
+                        $nota->save();
+                    }else{
+                        $nota->delete();
+                    }
+                }else{
+                    //si no existe la nota(nsp) y ha rellenado el campo nsp, creará la nota
+                    if($request->get('nota_'.$alumno->id) != null){                  
+                        $nota = new Nota();
+                        $nota->id_curso = $id;
+                        $nota->id_bimestre = $request->get('id_bimestre');
+                        $nota->id_evaluacion = $request->get('id_evaluacion');
+                        $nota->num_evaluacion = $request->get('num_evaluacion');
+                        $nota->id_alumno = $alumno->id;
+                        $nota->nota = $request->get('nota_'.$alumno->id);            
+                        $nota->save();
+                    }
+                    //si no existe la nota(nsp) y no ha rellenado el campo nsp, creará la nota
+                }
             }
             return redirect()->route('curso.perfil',$id);
         }

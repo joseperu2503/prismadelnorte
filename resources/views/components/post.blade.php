@@ -32,7 +32,18 @@
     <div class="card-body">
         <h3 class="card-title mb-3">{{$post->titulo}}</h3>
         {!! $post->descripcion !!}
-        <div class="d-flex justify-item-center gap-3 mt-5">
+
+
+        @if (isset($post->id_curso))
+            <a @if (auth()->user()->role=='admin' || auth()->user()->role=='profesor') href="/curso/{{$post->curso->id}}"
+            @elseif(auth()->user()->role=='alumno')  href="/alumno/cursos/{{$post->curso->codigo}}" 
+            @endif class="btn btn-outline-primary btn-sm mt-4 rounded-pill">
+                {{$post->curso->nombre}}
+            </a>
+        @endif  
+            
+            
+        <div class="d-flex justify-item-center gap-3 mt-2 pt-2 border-top">
             <div>
                 <img src="/storage/fotos_perfil/{{$post->autorimagen}}" style="width:40px;height: 40px;object-fit: cover">
             </div>

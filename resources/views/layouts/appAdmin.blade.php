@@ -17,7 +17,7 @@
     </div>
     <ul class="nav-links">
       <li>
-        <a href="/publicaciones">
+        <a href="/inicio">
           <i class='bx bx-grid-alt' ></i>
           <span class="link_name">Inicio</span>
         </a>
@@ -76,6 +76,21 @@
         <ul class="sub-menu blank">
           <li><a class="link_name" href="#">Personal Complementario</a></li>
         </ul>
+      </li>
+      <li>
+        <div class="profile-details">
+          
+          <div class="profile-content">
+            <!--<img src="image/profile.jpg" alt="profileImg">-->
+          </div>
+          <div class="name-job">
+            <div class="profile_name">Cerrar Sesion</div>
+          </div>
+          <a href="{{route('login.destroy')}}">
+            <i class='bx bx-log-out' ></i>
+          </a>
+          
+        </div>
       </li>
     </ul>
   </div>

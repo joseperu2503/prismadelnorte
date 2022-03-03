@@ -115,9 +115,9 @@ class AlumnoController extends Controller
     {   
         $request->validate([
             'dni' => 'required|numeric|digits:8',
-            'dni_padre' => 'numeric|digits:8',
-            'dni_madre' => 'numeric|digits:8',
-            'dni_apoderado' => 'numeric|digits:8',
+            'dni_padre' => 'nullable|numeric|digits:8',
+            'dni_madre' => 'nullable|numeric|digits:8',
+            'dni_apoderado' => 'nullable|numeric|digits:8',
             'primer_nombre' => 'required',
             'apellido_paterno' => 'required',
             'apellido_materno' => 'required',
@@ -212,15 +212,40 @@ class AlumnoController extends Controller
         $curso = DB::table('cursos')->where('codigo', $codigo)->first();
         $bimestres = Bimestre::select('*')                      
             ->get();
-        $notas = Nota::select('notas.*','evaluacions.evaluacion')    
-            ->leftjoin('evaluacions', 'notas.id_evaluacion', '=', 'evaluacions.id')                
+
+        $evaluaciones = Nota::select('evaluacions.evaluacion','notas.num_evaluacion','notas.id_evaluacion','notas.id_bimestre')   
+            ->leftjoin('evaluacions', 'notas.id_evaluacion', '=', 'evaluacions.id')        
             ->where('id_curso', $curso->id)
-            ->where('id_alumno', $alumno->id)
+            ->distinct()
             ->get();
+
+        $notas_tabla = [];
+        foreach($bimestres as $bimestre){
+            $notas_bimestre = [];          
+                foreach($evaluaciones as $evaluacion){   
+                    if($evaluacion->id_bimestre == $bimestre->id){
+                        $nota = DB::table('notas')                  
+                        ->where('id_curso', $curso->id)
+                        ->where('id_alumno', $alumno->id)
+                        ->where('id_bimestre', $bimestre->id)
+                        ->where('id_evaluacion', $evaluacion->id_evaluacion)
+                        ->where('num_evaluacion', $evaluacion->num_evaluacion)
+                        ->first();    
+                        if(isset($nota)) {
+                            $nota2=$nota->nota;
+                        }else{
+                            $nota2='NSP';
+                        }
+                        $notas_bimestre += ["$evaluacion->id_evaluacion $evaluacion->num_evaluacion" => $nota2];  
+                    }                             
+                }
+            $notas_tabla += [$bimestre->id => $notas_bimestre];           
+        }
         return view('admin.alumno.usuario.curso')->with('curso',$curso)
             ->with('alumno',$alumno)
             ->with('bimestres',$bimestres)
-            ->with('notas',$notas);
+            ->with('notas_tabla',$notas_tabla)
+            ->with('evaluaciones',$evaluaciones);
     }
 
     public function asistencia_usuario()
