@@ -143,17 +143,33 @@ class CursoController extends Controller
             ->get();
         
         $notas = Nota::select('*') 
-            ->where('id_curso', $id)  
             ->get();
               
         $posts = Post::select('*')
             ->orderby('created_at','desc')
             ->get();
 
-        $nota=[];
-        foreach($notas as $nota){
-            $nota
-        }
+            $notas_tabla = [];
+            foreach($bimestres as $bimestre){
+                $notas_bimestre = [];        
+                foreach($alumnos as $alumno){
+                    $notas_alumno = [];              
+                    foreach($evaluaciones as $evaluacion){   
+                        if($evaluacion->id_bimestre == $bimestre->id){
+                            $nota = DB::table('notas')                  
+                            ->where('id_curso', $id)
+                            ->where('id_alumno', $alumno->id)
+                            ->where('id_bimestre', $bimestre->id)
+                            ->where('id_evaluacion', $evaluacion->id_evaluacion)
+                            ->where('num_evaluacion', $evaluacion->num_evaluacion)
+                            ->first();       
+                            $notas_alumno += ["$evaluacion->id_evaluacion $evaluacion->num_evaluacion" => $nota->nota];  
+                        }                             
+                    }
+                    $notas_bimestre += [$alumno->id => $notas_alumno];
+                }
+                $notas_tabla += [$bimestre->id => $notas_bimestre];           
+            }
 
         
         return view('admin.curso.perfil.index')
@@ -164,7 +180,8 @@ class CursoController extends Controller
             ->with('alumnos',$alumnos)
             ->with('evaluaciones',$evaluaciones)
             ->with('posts',$posts)
-            ->with('notas',$notas);
+            ->with('notas',$notas)
+            ->with('notas_tabla',$notas_tabla);
     }
 
 }
