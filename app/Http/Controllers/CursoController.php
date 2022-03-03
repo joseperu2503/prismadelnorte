@@ -142,54 +142,19 @@ class CursoController extends Controller
             ->distinct()
             ->get();
         
+        $notas = Nota::select('*') 
+            ->where('id_curso', $id)  
+            ->get();
+              
+        $posts = Post::select('*')
+            ->orderby('created_at','desc')
+            ->get();
 
-        $prueba=[];
-        foreach($alumnos as $alumno){
-            $notas_alumno = ["hola"=>"soy"];
-            $prueba += [$alumno->id => $notas_alumno];
+        $nota=[];
+        foreach($notas as $nota){
+            $nota
         }
 
-        $notas_tabla = [];
-        foreach($bimestres as $bimestre){
-            $notas_bimestre = [];        
-            foreach($alumnos as $alumno){
-                $notas_alumno = [];              
-                foreach($evaluaciones as $evaluacion){   
-                    if($evaluacion->id_bimestre == $bimestre->id){
-                        $nota = DB::table('notas')                  
-                        ->where('id_curso', $id)
-                        ->where('id_alumno', $alumno->id)
-                        ->where('id_bimestre', $bimestre->id)
-                        ->where('id_evaluacion', $evaluacion->id_evaluacion)
-                        ->where('num_evaluacion', $evaluacion->num_evaluacion)
-                        ->first();       
-                        $notas_alumno += ["$evaluacion->id_evaluacion $evaluacion->num_evaluacion" => $nota->nota];  
-                    }                             
-                }
-                $notas_bimestre += [$alumno->id => $notas_alumno];
-            }
-            $notas_tabla += [$bimestre->id => $notas_bimestre];           
-        }
-
-        $posts = Post::select('posts.*','users.dni','users.role')
-        ->leftjoin('users', 'posts.id_user', '=', 'users.id')
-        ->where('id_curso',$id)
-        ->orderby('created_at','desc')
-        ->get();
-        foreach($posts as $post){
-            if($post->role=='profesor'){
-                $profesor2=Profesor::select('*')
-                    ->where('dni',$post->dni)
-                    ->first();
-                $post['autor']=$profesor2->primer_nombre." ".$profesor2->apellido_paterno;
-                $post['autor_imagen']=$profesor2->foto_perfil;
-            }
-            else if($post->role=='admin'){
-                $post['autor']='Administración';
-                $post['autor_imagen']='logo.png';
-            }
-        }  
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         
         return view('admin.curso.perfil.index')
             ->with('curso',$curso)
@@ -198,9 +163,8 @@ class CursoController extends Controller
             ->with('bimestres',$bimestres)
             ->with('alumnos',$alumnos)
             ->with('evaluaciones',$evaluaciones)
-            ->with('notas_tabla',$notas_tabla)
             ->with('posts',$posts)
-            ->with('meses',$meses);
+            ->with('notas',$notas);
     }
 
 }

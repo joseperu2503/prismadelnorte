@@ -37,7 +37,16 @@
                                 @if($evaluacion->id_bimestre == $bimestre->id)
                                     <td class="align-middle">
                                         <div class="justify-content-center row align-items-center">
-                                            {{isset($notas_tabla["$bimestre->id"]["$alumno->id"]["$evaluacion->id_evaluacion $evaluacion->num_evaluacion"])}}
+                                            @foreach ($notas as $nota)
+                                                @if ($nota->id_alumno== $alumno->id && $nota->id_curso== $curso->id && $nota->id_bimestre== $bimestre->id && $nota->id_evaluacion== $evaluacion->id_evaluacion && $nota->num_evaluacion== $evaluacion->num_evaluacion)
+                                                    {{$nota->nota}}
+                                                @endif
+                                            @endforeach   
+                                            @if (Nota::where('id_alumno', $alumno->id)-where('id_curso', $curso->id)->exists())
+                                                hola
+                                            @else
+                                                
+                                            @endif                     
                                         </div>                          
                                     </td>
                                 @endif
@@ -79,7 +88,9 @@
     <div class="container">
         <div class="row">
             @foreach ($posts as $post)
-                <x-post :post="$post" :meses="$meses"/>
+                @if ($post->id_curso == $curso->id)
+                    <x-post :post="$post"/>   
+                @endif         
             @endforeach
         </div>  
     </div>
