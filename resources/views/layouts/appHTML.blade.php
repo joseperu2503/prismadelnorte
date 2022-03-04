@@ -3,6 +3,7 @@
 <html lang="es" dir="ltr">
 	<head>
 		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="https://i.postimg.cc/jj9jhhDj/prismaicono.png">
 		<title>@yield('title')</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<!--<title> Drop Down Sidebar Menu | CodingLab </title>-->

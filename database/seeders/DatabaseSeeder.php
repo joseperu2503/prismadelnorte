@@ -197,115 +197,6 @@ class DatabaseSeeder extends Seeder
 
         $aula->save();
 
-       
-        $alumno = new Alumno;
-        $alumno->dni = '73917269';
-        $alumno->primer_nombre = 'Rousvel';
-        $alumno->segundo_nombre = 'Roldan';
-        $alumno->apellido_paterno = 'Flores';
-        $alumno->apellido_materno = 'Roldan';
-        $alumno->fecha_nacimiento = Carbon::parse('20-11-2009');
-        $alumno->departamento = 'Lima';
-        $alumno->provincia = 'Lima';
-        $alumno->distrito = 'Puente Piedra';
-        $alumno->religion = 'Cristiana';
-        $alumno->discapacidad = 'No';
-        $alumno->id_grado = '9';
-        $alumno->id_aula = '8';
-        $alumno->telefono = '956770895';
-        $alumno->email = 'rousvelr20@gmail.com';
-        $alumno->direccion = 'al costado de la panaderia';
-        $alumno->foto_perfil = '/storage/fotos_perfil/estudiante.png';
-        $alumno->id_genero = '1';
-        $alumno->password = 'hola';
-        $alumno->nombre_padre = 'JOSE MANUEL FLORES DELGADO';
-        $alumno->dni_padre = '06892202';
-        $alumno->telefono_padre = '969300081';
-        $alumno->nombre_madre = 'Gladys Veronica Roldan Obregón ';
-        $alumno->dni_madre = '33254044';
-        $alumno->telefono_madre = '956770895';
-        $alumno->nombre_apoderado = 'Gladys Veronica Roldan Obregón ';
-        $alumno->dni_apoderado = '33254044';
-        $alumno->telefono_apoderado = '33254044';
-        $alumno->save();
-
-        $user = new User;
-        $user->dni = '73917269';
-        $user->password = 'hola';
-        $user->role = 'alumno';
-        $user->save();
-
-
-        $profesor = new Profesor;
-        $profesor->dni = '45978632';
-        $profesor->primer_nombre = 'Jose';
-        $profesor->segundo_nombre = 'Manuel';
-        $profesor->apellido_paterno = 'Martinez';
-        $profesor->apellido_materno = 'Lopez';
-        $profesor->telefono = '993689145';
-        $profesor->email = 'joseperu2503@gmail.com';
-        $profesor->direccion = 'al costado de la panaderia';
-        $profesor->id_genero = '1';
-        $profesor->foto_perfil = 'man.png';
-        $profesor->password = 'mama';
-        $profesor->save();
-
-        $user = new User;
-        $user->dni = '45978632';
-        $user->password = 'mama';
-        $user->role = 'profesor';
-        $user->save();
-
-        $profesor = new Profesor;
-        $profesor->dni = '45978635';
-        $profesor->primer_nombre = 'Gabriela';
-        $profesor->segundo_nombre = 'Lucia';
-        $profesor->apellido_paterno = 'Ortega';
-        $profesor->apellido_materno = 'Tarazona';
-        $profesor->telefono = '993689145';
-        $profesor->email = 'joseperu2503@gmail.com';
-        $profesor->direccion = 'al costado de la panaderia';
-        $profesor->id_genero = '2';
-        $profesor->foto_perfil = 'man.png';
-        $profesor->password = 'mama';
-        $profesor->save();
-
-        $user = new User;
-        $user->dni = '45978635';
-        $user->password = 'mama';
-        $user->role = 'profesor';
-        $user->save();
-
-        $curso = new Curso;
-        $curso->codigo = 'ARIT06PRIM';
-        $curso->nombre = 'aritmetica';
-        $curso->id_profesor = '1';
-        $curso->id_aula = '8';
-        $curso->save();
-
-        $curso = new Curso;
-        $curso->codigo = 'ALGE06PRIM';
-        $curso->nombre = 'algebra';
-        $curso->id_profesor = '1';
-        $curso->id_aula = '8';
-        $curso->save();
-
-
-        $curso = new Curso;
-        $curso->codigo = 'GEO05PRIM';
-        $curso->nombre = 'geometria';
-        $curso->id_profesor = '1';
-        $curso->id_aula = '7';
-        $curso->save();
-
-
-        $curso = new Curso;
-        $curso->codigo = 'TRIGO05PRIM';
-        $curso->nombre = 'trigonometria';
-        $curso->id_profesor = '1';
-        $curso->id_aula = '7';
-        $curso->save();
-
         $bimestre = new Bimestre;
         $bimestre->num_bimestre = '1';
         $bimestre->bimestre = 'Primer';
@@ -341,6 +232,119 @@ class DatabaseSeeder extends Seeder
         $evaluacion = new Evaluacion;
         $evaluacion->evaluacion = 'Exámen Bimestral';
         $evaluacion->save();
+
+
+
+
+        // $alumno = new Alumno;
+        // $alumno->dni = '73917269';
+        // $alumno->primer_nombre = 'Rousvel';
+        // $alumno->segundo_nombre = 'Roldan';
+        // $alumno->apellido_paterno = 'Flores';
+        // $alumno->apellido_materno = 'Roldan';
+        // $alumno->fecha_nacimiento = Carbon::parse('20-11-2009');
+        // $alumno->departamento = 'Lima';
+        // $alumno->provincia = 'Lima';
+        // $alumno->distrito = 'Puente Piedra';
+        // $alumno->religion = 'Cristiana';
+        // $alumno->discapacidad = 'No';
+        // $alumno->id_grado = '9';
+        // $alumno->id_aula = '8';
+        // $alumno->telefono = '956770895';
+        // $alumno->email = 'rousvelr20@gmail.com';
+        // $alumno->direccion = 'al costado de la panaderia';
+        // $alumno->foto_perfil = '/storage/fotos_perfil/estudiante.png';
+        // $alumno->id_genero = '1';
+        // $alumno->password = 'hola';
+        // $alumno->nombre_padre = 'JOSE MANUEL FLORES DELGADO';
+        // $alumno->dni_padre = '06892202';
+        // $alumno->telefono_padre = '969300081';
+        // $alumno->nombre_madre = 'Gladys Veronica Roldan Obregón ';
+        // $alumno->dni_madre = '33254044';
+        // $alumno->telefono_madre = '956770895';
+        // $alumno->nombre_apoderado = 'Gladys Veronica Roldan Obregón ';
+        // $alumno->dni_apoderado = '33254044';
+        // $alumno->telefono_apoderado = '33254044';
+        // $alumno->save();
+
+        // $user = new User;
+        // $user->dni = '73917269';
+        // $user->password = 'hola';
+        // $user->role = 'alumno';
+        // $user->save();
+
+
+        // $profesor = new Profesor;
+        // $profesor->dni = '45978632';
+        // $profesor->primer_nombre = 'Jose';
+        // $profesor->segundo_nombre = 'Manuel';
+        // $profesor->apellido_paterno = 'Martinez';
+        // $profesor->apellido_materno = 'Lopez';
+        // $profesor->telefono = '993689145';
+        // $profesor->email = 'joseperu2503@gmail.com';
+        // $profesor->direccion = 'al costado de la panaderia';
+        // $profesor->id_genero = '1';
+        // $profesor->foto_perfil = 'man.png';
+        // $profesor->password = 'mama';
+        // $profesor->save();
+
+        // $user = new User;
+        // $user->dni = '45978632';
+        // $user->password = 'mama';
+        // $user->role = 'profesor';
+        // $user->save();
+
+        // $profesor = new Profesor;
+        // $profesor->dni = '45978635';
+        // $profesor->primer_nombre = 'Gabriela';
+        // $profesor->segundo_nombre = 'Lucia';
+        // $profesor->apellido_paterno = 'Ortega';
+        // $profesor->apellido_materno = 'Tarazona';
+        // $profesor->telefono = '993689145';
+        // $profesor->email = 'joseperu2503@gmail.com';
+        // $profesor->direccion = 'al costado de la panaderia';
+        // $profesor->id_genero = '2';
+        // $profesor->foto_perfil = 'man.png';
+        // $profesor->password = 'mama';
+        // $profesor->save();
+
+        // $user = new User;
+        // $user->dni = '45978635';
+        // $user->password = 'mama';
+        // $user->role = 'profesor';
+        // $user->save();
+
+        // $curso = new Curso;
+        // $curso->codigo = 'ARIT06PRIM';
+        // $curso->nombre = 'aritmetica';
+        // $curso->id_profesor = '1';
+        // $curso->id_aula = '8';
+        // $curso->save();
+
+        // $curso = new Curso;
+        // $curso->codigo = 'ALGE06PRIM';
+        // $curso->nombre = 'algebra';
+        // $curso->id_profesor = '1';
+        // $curso->id_aula = '8';
+        // $curso->save();
+
+
+        // $curso = new Curso;
+        // $curso->codigo = 'GEO05PRIM';
+        // $curso->nombre = 'geometria';
+        // $curso->id_profesor = '1';
+        // $curso->id_aula = '7';
+        // $curso->save();
+
+
+        // $curso = new Curso;
+        // $curso->codigo = 'TRIGO05PRIM';
+        // $curso->nombre = 'trigonometria';
+        // $curso->id_profesor = '1';
+        // $curso->id_aula = '7';
+        // $curso->save();
+
+        
 
 
     }
